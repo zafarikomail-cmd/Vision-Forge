@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vision Forge — Student Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════════════
+   VIFO — Student Portal  ·  Vision Forge Design System
+   Ivory · Deep Navy #0d1f35 · Ink Blue #1a4b8c · Gold #b8922a
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  color-scheme: light;
+  --navy:        #0d1f35;
+  --navy-mid:    #1a3254;
+  --ink:         #1a4b8c;
+  --ink-light:   #2e6bbf;
+  --ink-pale:    #edf3fb;
+  --ink-pale2:   #dce9f7;
+  --gold:        #b8922a;
+  --gold-light:  #d4ab52;
+  --gold-pale:   #faf5ea;
+  --ivory:       #fdfcf9;
+  --white:       #ffffff;
+  --off-white:   #f8f7f4;
+  --off-white2:  #f2f0eb;
+  --border:      rgba(13,31,53,0.08);
+  --border-mid:  rgba(13,31,53,0.13);
+  --border-strong: rgba(13,31,53,0.20);
+  --text:        #1a2e42;
+  --text-mid:    #4a5e72;
+  --text-light:  rgba(26,46,66,0.42);
+  --green:       #2e9e6b;
+  --green-pale:  #e8f5f0;
+  --purple:      #7c4ec4;
+  --purple-pale: #f0ebfa;
+  --radius:      10px;
+  --radius-lg:   16px;
+  --radius-xl:   22px;
+  --ease:        cubic-bezier(0.22, 1, 0.36, 1);
+  --sidebar-w:   252px;
+  --font-serif:  'Cormorant Garamond', Georgia, serif;
+  --font-body:   'Outfit', system-ui, sans-serif;
+  --shadow-xs:   0 1px 4px rgba(13,31,53,0.05);
+  --shadow-sm:   0 2px 12px rgba(13,31,53,0.07);
+  --shadow-md:   0 6px 28px rgba(13,31,53,0.10);
+  --shadow-lg:   0 18px 54px rgba(13,31,53,0.13);
+  --shadow-xl:   0 30px 80px rgba(13,31,53,0.16);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  background: var(--off-white);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(13,31,53,0.15); border-radius: 2px; }
+
+/* ── Page enter ── */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes floatUp {
+  from { opacity:0; transform:translateY(8px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes gold-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(184,146,42,0.18); }
+  50%     { box-shadow: 0 0 0 6px rgba(184,146,42,0); }
+}
+@keyframes pulse-dot {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%     { opacity:0.45; transform:scale(0.8); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.portal-layout {
+  display: flex;
+  min-height: 100vh;
+  animation: pageIn 0.65s var(--ease) both;
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
+  transition: transform 0.4s var(--ease);
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Subtle grain texture on sidebar */
+  background-image: 
+    radial-gradient(ellipse at 80% 20%, rgba(26,75,140,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(184,146,42,0.08) 0%, transparent 50%);
+}
+
+/* Sidebar top: logo */
+.sidebar-head {
+  padding: 26px 22px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+}
+.sidebar-logo-mark {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  background: rgba(184,146,42,0.15);
+  border: 1px solid rgba(184,146,42,0.28);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sidebar-logo-mark svg {
+  width: 17px; height: 17px;
+  stroke: var(--gold-light); fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.sidebar-brand {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.sidebar-brand em { font-style: normal; color: var(--gold-light); }
+
+/* Student strip */
+.sidebar-student {
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.student-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-light) 100%);
+  border: 2px solid rgba(255,255,255,0.13);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 0.95rem; font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.01em;
+}
+.student-info p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.88);
+  font-weight: 500;
+  line-height: 1.3;
+}
+.student-info span {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.34);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Nav */
+.sidebar-nav { flex: 1; padding: 14px 0; }
+.nav-group-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+  padding: 14px 22px 5px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: background 0.22s, border-color 0.22s, transform 0.18s;
+  border-left: 2.5px solid transparent;
+  position: relative;
+}
+.nav-item:hover { background: rgba(255,255,255,0.05); transform: translateX(2px); }
+.nav-item.active {
+  background: rgba(184,146,42,0.11);
+  border-left-color: var(--gold);
+}
+.nav-item.active .nav-icon svg { stroke: var(--gold-light); }
+.nav-item.active .nav-label { color: #fff; font-weight: 600; }
+
+.nav-icon {
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.38);
+  transition: color 0.22s;
+}
+.nav-icon svg {
+  width: 16px; height: 16px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
+}
+.nav-label {
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.22s;
+}
+.nav-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+.nav-badge.nb-green { background: var(--green); }
+.nav-badge.nb-blue  { background: var(--ink-light); }
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding: 14px 22px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+.sidebar-logout {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.28);
+  cursor: pointer;
+  padding: 7px 0;
+  transition: color 0.2s;
+}
+.sidebar-logout:hover { color: rgba(255,255,255,0.58); }
+.sidebar-logout svg {
+  width: 14px; height: 14px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Mobile toggle */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px; z-index: 200;
+  width: 38px; height: 38px;
+  background: var(--navy);
+  border: none; border-radius: 9px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 5px;
+  box-shadow: var(--shadow-md);
+}
+.sidebar-toggle span {
+  display: block; width: 16px; height: 1.5px;
+  background: rgba(255,255,255,0.85);
+  transition: all 0.3s var(--ease);
+}
+.sidebar-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.sidebar-toggle.open span:nth-child(2) { opacity: 0; }
+.sidebar-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 90;
+  background: rgba(13,31,53,0.52);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.sidebar-overlay.visible { opacity: 1; }
+
+/* ══════════════════════════════════════════
+   MAIN CONTENT AREA
+══════════════════════════════════════════ */
+.main-content {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Topbar */
+.topbar {
+  background: rgba(253,252,249,0.96);
+  border-bottom: 1px solid var(--border);
+  padding: 15px 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: sticky;
+  top: 0; z-index: 80;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.topbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.topbar-title {
+  font-family: var(--font-serif);
+  font-size: 1.32rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.topbar-sub {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  letter-spacing: 0.02em;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.topbar-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ink-pale);
+  border: 1px solid var(--ink-pale2);
+  border-radius: 20px;
+  padding: 5px 13px;
+  font-size: 0.73rem;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.pill-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink-light);
+  animation: pulse-dot 2.2s infinite;
+}
+
+/* Page content */
+.page-content {
+  padding: 32px 34px 60px;
+  flex: 1;
+}
+
+/* Views */
+.view { display: none; animation: viewIn 0.42s var(--ease) both; }
+.view.active { display: block; }
+
+/* ══════════════════════════════════════════
+   VIEW HEADER (shared across pages)
+══════════════════════════════════════════ */
+.view-header {
+  margin-bottom: 28px;
+}
+.view-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 9px;
+}
+.view-eyebrow::before {
+  content: '';
+  width: 22px; height: 1px;
+  background: var(--gold);
+}
+.view-header h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 9px;
+  letter-spacing: -0.015em;
+}
+.view-header p {
+  font-size: 0.875rem;
+  color: var(--text-mid);
+  max-width: 540px;
+  line-height: 1.75;
+}
+
+/* ══════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════ */
+.welcome-strip {
+  background: linear-gradient(128deg, var(--navy) 0%, #162d50 45%, #1a3a6a 100%);
+  border-radius: var(--radius-xl);
+  padding: 36px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(13,31,53,0.22);
+}
+.welcome-strip::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -30px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(184,146,42,0.07);
+  pointer-events: none;
+}
+.welcome-strip::after {
+  content: '';
+  position: absolute;
+  bottom: -70px; right: 80px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(46,107,191,0.14);
+  pointer-events: none;
+}
+/* Fine line pattern */
+.welcome-strip-lines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.5) 0px,
+    rgba(255,255,255,0.5) 1px,
+    transparent 1px,
+    transparent 40px
+  );
+  pointer-events: none;
+}
+.welcome-text {
+  position: relative; z-index: 1;
+}
+.welcome-text h2 {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 7px;
+  letter-spacing: -0.01em;
+}
+.welcome-text h2 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+.welcome-text p {
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.52);
+  max-width: 340px;
+  line-height: 1.7;
+}
+.welcome-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 24px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.28s var(--ease);
+  white-space: nowrap;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(184,146,42,0.42);
+  position: relative; z-index: 1;
+  letter-spacing: 0.01em;
+  animation: gold-pulse 3s infinite;
+}
+.welcome-cta:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(184,146,42,0.52);
+  animation: none;
+}
+.welcome-cta svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 20px 16px;
+  transition: box-shadow 0.28s var(--ease), transform 0.28s var(--ease), border-color 0.28s;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--sc-accent, var(--ink));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.36s var(--ease);
+}
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--border-mid);
+}
+.stat-card:hover::after { transform: scaleX(1); }
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.stat-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 13px;
+}
+.stat-icon svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.si-blue   { background: var(--ink-pale);   color: var(--ink); }
+.si-gold   { background: var(--gold-pale);  color: var(--gold); }
+.si-green  { background: var(--green-pale); color: var(--green); }
+.si-purple { background: var(--purple-pale);color: var(--purple); }
+
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.73rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* Modules grid */
+.section-row-title {
+  font-family: var(--font-serif);
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-row-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.module-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2.5px;
+  background: var(--mc-accent, var(--ink));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.34s var(--ease);
+}
+.module-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  border-color: var(--border-mid);
+}
+.module-card:hover::before { transform: scaleX(1); }
+.mc-gold { --mc-accent: var(--gold); }
+.mc-blue { --mc-accent: var(--ink); }
+.mc-green { --mc-accent: var(--green); }
+
+.module-icon {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+  font-size: 1.25rem;
+}
+.module-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.module-desc {
+  font-size: 0.78rem;
+  color: var(--text-mid);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.module-foot {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.module-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: var(--off-white2);
+  color: var(--text-mid);
+}
+.module-arrow {
+  margin-left: auto;
+  width: 26px; height: 26px;
+  background: var(--off-white2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.22s, transform 0.22s;
+}
+.module-card:hover .module-arrow {
+  background: var(--navy);
+  transform: translateX(2px);
+}
+.module-arrow svg { width: 12px; height: 12px; stroke: var(--navy); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.22s; }
+.module-card:hover .module-arrow svg { stroke: #fff; }
+
+/* Dashboard bottom panels */
+.dash-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.panel-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.panel-head {
+  padding: 16px 20px 13px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.panel-head h3 {
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.panel-link {
+  font-size: 0.72rem;
+  color: var(--ink);
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.panel-link:hover { color: var(--navy); }
+.panel-body { padding: 4px 0; }
+
+/* Activity items */
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  transition: background 0.18s;
+}
+.activity-row:hover { background: var(--off-white); }
+.a-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.a-text { flex: 1; }
+.a-text p { font-size: 0.79rem; color: var(--text); line-height: 1.4; }
+.a-text span { font-size: 0.69rem; color: var(--text-light); }
+
+/* Announcement items */
+.ann-row {
+  padding: 13px 20px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.ann-row:last-child { border-bottom: none; }
+.ann-row:hover { background: var(--off-white); }
+.ann-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+}
+.at-gold  { background: var(--gold-pale);  color: var(--gold); }
+.at-blue  { background: var(--ink-pale);   color: var(--ink); }
+.at-green { background: var(--green-pale); color: var(--green); }
+.ann-title {
+  font-size: 0.8rem;
+  color: var(--navy);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 3px;
+}
+.ann-date {
+  font-size: 0.68rem;
+  color: var(--text-light);
+}
+
+/* ══════════════════════════════════════════
+   SCHOLARSHIP VIEW
+══════════════════════════════════════════ */
+.sch-list { display: grid; gap: 18px; }
+
+.sch-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.sch-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.sch-card-top {
+  padding: 22px 26px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.sch-icon {
+  width: 48px; height: 48px;
+  border-radius: 13px;
+  background: var(--gold-pale);
+  border: 1px solid rgba(184,146,42,0.16);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+.sch-top-info h3 {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 7px;
+  line-height: 1.2;
+}
+.sch-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sch-pill {
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.sp-open   { background: var(--green-pale); color: var(--green); }
+.sp-closed { background: var(--off-white2); color: var(--text-light); }
+.sp-date   { background: var(--gold-pale);  color: var(--gold); }
+
+.sch-card-body {
+  padding: 20px 26px 24px;
+}
+.sch-body-text {
+  font-size: 0.865rem;
+  color: var(--text-mid);
+  line-height: 1.85;
+  margin-bottom: 18px;
+}
+.sch-grid-detail {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--off-white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+.sch-detail label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.sch-detail p {
+  font-size: 0.8rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+.sch-req h4 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.sch-req-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.sch-req-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.8rem;
+  color: var(--text-mid);
+}
+.sch-req-list li::before {
+  content: '';
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  background: var(--ink-pale);
+  border: 1.5px solid var(--ink-pale2);
+  flex-shrink: 0;
+  margin-top: 1px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8l3 3 6-6' stroke='%231a4b8c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-size: 11px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.sch-note {
+  margin-top: 18px;
+  padding: 13px 17px;
+  background: var(--ink-pale);
+  border-left: 3px solid var(--ink);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.79rem;
+  color: var(--ink);
+  line-height: 1.65;
+}
+.sch-note strong { color: var(--navy); }
+
+/* ══════════════════════════════════════════
+   TRADING / ENGLISH LESSONS VIEW
+══════════════════════════════════════════ */
+.lesson-tabs {
+  display: flex;
+  gap: 3px;
+  background: var(--off-white2);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 26px;
+  width: fit-content;
+}
+.l-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border-radius: 7px;
+  border: none;
+  background: none;
+  font-size: 0.81rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.22s var(--ease);
+}
+.l-tab svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.l-tab.active {
+  background: var(--ivory);
+  color: var(--navy);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+.l-tab-panel { display: none; }
+.l-tab-panel.active { display: block; animation: viewIn 0.38s var(--ease) both; }
+
+.lesson-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-light);
+  padding: 6px 0 11px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.lessons-list { display: grid; gap: 10px; margin-bottom: 24px; }
+
+.lesson-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: all 0.28s var(--ease);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.lesson-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--lc-accent, var(--ink));
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.32s var(--ease);
+  border-radius: 0 2px 2px 0;
+}
+.lesson-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(5px);
+  border-color: var(--border-mid);
+}
+.lesson-card:hover::before { transform: scaleY(1); }
+.lc-ink   { --lc-accent: var(--ink); }
+.lc-gold  { --lc-accent: var(--gold); }
+.lc-green { --lc-accent: var(--green); }
+.lesson-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(4px);
+  border-color: var(--border-mid);
+}
+.lesson-num {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.ln-ink  { background: linear-gradient(135deg, var(--ink) 0%, var(--ink-light) 100%); }
+.ln-gold { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); }
+.ln-green { background: linear-gradient(135deg, var(--green) 0%, #3db87c 100%); }
+
+.lesson-info { flex: 1; min-width: 0; }
+.lesson-title {
+  font-family: var(--font-serif);
+  font-size: 0.99rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 3px;
+  line-height: 1.25;
+}
+.lesson-sub {
+  font-size: 0.76rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lesson-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.lesson-status {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.ls-avail  { background: var(--green-pale); color: var(--green); }
+.ls-new    { background: var(--ink-pale);   color: var(--ink); }
+.ls-soon   { background: var(--off-white2); color: var(--text-light); }
+.lesson-dur {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  display: flex; align-items: center; gap: 4px;
+}
+.lesson-dur svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+/* ══════════════════════════════════════════
+   LESSON MODAL
+══════════════════════════════════════════ */
+.lesson-modal-wrap {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(13,31,53,0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.lesson-modal-wrap.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.lesson-modal {
+  background: var(--ivory);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 660px;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  transform: scale(0.94) translateY(12px);
+  transition: transform 0.34s var(--ease);
+  border: 1px solid var(--border);
+}
+.lesson-modal-wrap.open .lesson-modal {
+  transform: scale(1) translateY(0);
+}
+.lm-head {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0;
+  background: var(--ivory);
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  z-index: 2;
+}
+.lm-close {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--off-white2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+.lm-close:hover { background: var(--off-white); transform: scale(1.08); }
+.lm-close svg { width: 14px; height: 14px; stroke: var(--navy); fill: none; stroke-width: 2.2; stroke-linecap: round; }
+.lm-body { padding: 26px 28px 32px; }
+.lm-eyebrow {
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 7px;
+}
+.lm-title {
+  font-family: var(--font-serif);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.12;
+  margin-bottom: 5px;
+  letter-spacing: -0.01em;
+}
+.lm-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
+.lm-meta-item {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  display: flex; align-items: center; gap: 5px;
+}
+.lm-meta-item svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.lm-content {
+  font-size: 0.865rem;
+  color: var(--text-mid);
+  line-height: 1.9;
+  margin-bottom: 24px;
+}
+.lm-content p { margin-bottom: 13px; }
+.lm-content p:last-child { margin-bottom: 0; }
+.lm-content strong { color: var(--navy); font-weight: 600; }
+.lm-keypoints {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+.lm-keypoints h4 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--navy);
+  margin-bottom: 11px;
+}
+.lm-keypoints ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.lm-keypoints li {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 0.79rem;
+  color: var(--text-mid);
+}
+.lm-keypoints li::before {
+  content: '→';
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.lm-note {
+  background: var(--ink-pale);
+  border-left: 3px solid var(--ink);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 13px 17px;
+  font-size: 0.79rem;
+  color: var(--ink);
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
+.lm-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.lm-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 0.81rem; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: all 0.26s var(--ease);
+  letter-spacing: 0.01em;
+}
+.lm-btn-primary { background: var(--navy); color: #fff; box-shadow: 0 2px 12px rgba(13,31,53,0.18); }
+.lm-btn-primary:hover { background: var(--ink); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,75,140,0.26); }
+.lm-btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border-strong); }
+.lm-btn-outline:hover { background: var(--off-white2); }
+.lm-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ══════════════════════════════════════════
+   MESSAGES VIEW
+══════════════════════════════════════════ */
+.msg-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 568px;
+}
+.msg-left {
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.msg-left-head {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-serif);
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+.msg-new-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 12px 14px;
+  padding: 9px 14px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius);
+  font-size: 0.79rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.22s, transform 0.22s;
+  justify-content: center;
+}
+.msg-new-btn:hover { background: var(--ink); transform: scale(1.01); }
+.msg-new-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+
+.thread-list { flex: 1; overflow-y: auto; }
+.thread {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.thread:hover { background: var(--off-white); }
+.thread.active { background: var(--ink-pale); }
+.t-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy), var(--ink));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.74rem; font-weight: 700; color: #fff;
+  font-family: var(--font-serif);
+  flex-shrink: 0;
+}
+.ta-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); }
+.t-info { flex: 1; min-width: 0; }
+.t-name { font-size: 0.8rem; font-weight: 600; color: var(--navy); margin-bottom: 2px; }
+.t-preview {
+  font-size: 0.71rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t-time { font-size: 0.66rem; color: var(--text-light); flex-shrink: 0; }
+.t-unread {
+  width: 7px; height: 7px;
+  background: var(--ink);
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+/* Chat area */
+.msg-chat { display: flex; flex-direction: column; }
+.chat-head {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+}
+.chat-head h3 {
+  font-family: var(--font-serif);
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.online-pill {
+  font-size: 0.65rem;
+  color: var(--green);
+  background: var(--green-pale);
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--off-white);
+}
+.msg-bubble {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.mb-admin   { align-self: flex-start; }
+.mb-student { align-self: flex-end; align-items: flex-end; }
+.bubble-text {
+  padding: 10px 14px;
+  border-radius: 13px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.mb-admin .bubble-text {
+  background: var(--ivory);
+  color: var(--text);
+  border-bottom-left-radius: 3px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.mb-student .bubble-text {
+  background: var(--navy);
+  color: #fff;
+  border-bottom-right-radius: 3px;
+}
+.bubble-time {
+  font-size: 0.65rem;
+  color: var(--text-light);
+  padding: 0 3px;
+}
+.chat-compose {
+  padding: 13px 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.compose-wrap { flex: 1; }
+#msgInput {
+  width: 100%;
+  background: var(--off-white);
+  border: 1.5px solid var(--border-mid);
+  border-radius: 9px;
+  padding: 9px 13px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--navy);
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+  transition: border-color 0.22s, box-shadow 0.22s;
+  min-height: 40px; max-height: 88px;
+  overflow-y: auto;
+}
+#msgInput:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(26,75,140,0.07);
+  background: var(--ivory);
+}
+#msgInput::placeholder { color: rgba(26,46,66,0.28); }
+.msg-send-btn {
+  width: 40px; height: 40px;
+  background: var(--navy);
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.22s, transform 0.22s;
+  flex-shrink: 0;
+}
+.msg-send-btn:hover { background: var(--ink); transform: scale(1.04); }
+.msg-send-btn svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .stats-row    { grid-template-columns: repeat(2, 1fr); }
+  .modules-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-bottom  { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: block; }
+  .sidebar-toggle  { display: flex; }
+  .main-content    { margin-left: 0; }
+  .topbar          { padding: 13px 18px 13px 62px; }
+  .page-content    { padding: 22px 16px 48px; }
+  .modules-grid    { grid-template-columns: 1fr; }
+  .welcome-strip   { flex-direction: column; align-items: flex-start; padding: 26px 24px; }
+  .msg-layout      { grid-template-columns: 1fr; height: auto; }
+  .msg-left        { display: none; }
+  .sch-grid-detail { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .stats-row       { grid-template-columns: 1fr; }
+  .sch-grid-detail { grid-template-columns: 1fr; }
+  .lm-actions      { flex-direction: column; }
+  .lm-btn          { justify-content: center; }
+}
+
+/* Force light */
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: light; }
+  html, body { background: var(--off-white) !important; color: var(--text) !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile toggle -->
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Open menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="portal-layout">
+
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-head">
+      <div class="sidebar-logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <span class="sidebar-brand">Vif<em>o</em></span>
+    </div>
+
+    <div class="sidebar-student">
+      <div class="student-avatar" id="sAvatar">S</div>
+      <div class="student-info">
+        <p id="sName">Student</p>
+        <span>Active Learner</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-label">Main</div>
+      <div class="nav-item active" data-view="dashboard">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </span>
+        <span class="nav-label">Dashboard</span>
+      </div>
+
+      <div class="nav-group-label">Learning</div>
+      <div class="nav-item" data-view="scholarship">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </span>
+        <span class="nav-label">Scholarship</span>
+        <span class="nav-badge nb-green">New</span>
+      </div>
+      <div class="nav-item" data-view="trading">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </span>
+        <span class="nav-label">Trading</span>
+      </div>
+      <div class="nav-item" data-view="english">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h8M4 17h8"/></svg>
+        </span>
+        <span class="nav-label">English</span>
+      </div>
+
+      <div class="nav-group-label">Communication</div>
+      <div class="nav-item" data-view="messages">
+        <span class="nav-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <span class="nav-label">Messages</span>
+        <span class="nav-badge">2</span>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-logout" onclick="window.location.href='login.html'">
+        <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ══════ MAIN ══════ -->
+  <main class="main-content">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        <div class="topbar-sub" id="topbarDate"></div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-pill">
+          <div class="pill-dot"></div>
+          Enrolled
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    <div class="page-content">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="view active" id="view-dashboard">
+
+        <div class="welcome-strip">
+          <div class="welcome-strip-lines"></div>
+          <div class="welcome-text">
+            <h2>Welcome back, <em id="welcomeName">Student</em></h2>
+            <p>Your learning journey continues. Explore your modules, check scholarship updates, and stay in touch with your instructor.</p>
+          </div>
+          <button class="welcome-cta" onclick="switchView('trading')">
+            <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            Continue Learning
+          </button>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-icon si-blue">
+              <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="stat-num">12</div>
+            <div class="stat-label">Lessons Available</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon si-gold">
+              <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+            <div class="stat-num">2</div>
+            <div class="stat-label">Open Scholarships</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon si-green">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="stat-num">2</div>
+            <div class="stat-label">New Messages</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon si-purple">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-num">5</div>
+            <div class="stat-label">Days Active</div>
+          </div>
+        </div>
+
+        <div class="section-row-title">Your Modules</div>
+        <div class="modules-grid">
+
+          <div class="module-card mc-gold" onclick="switchView('scholarship')">
+            <div class="module-icon" style="background:var(--gold-pale)">🎓</div>
+            <div class="module-title">Scholarship</div>
+            <div class="module-desc">Scholarship opportunities, eligibility criteria, and admin-posted details — all in one place.</div>
+            <div class="module-foot">
+              <span class="module-tag">2 Active</span>
+              <div class="module-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </div>
+          </div>
+
+          <div class="module-card mc-blue" onclick="switchView('trading')">
+            <div class="module-icon" style="background:var(--ink-pale)">📈</div>
+            <div class="module-title">Trading Lessons</div>
+            <div class="module-desc">Financial markets, chart reading, technical analysis, and risk management — structured lessons.</div>
+            <div class="module-foot">
+              <span class="module-tag">6 Lessons</span>
+              <div class="module-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </div>
+          </div>
+
+          <div class="module-card mc-green" onclick="switchView('english')">
+            <div class="module-icon" style="background:var(--green-pale)">🔤</div>
+            <div class="module-title">English Lessons</div>
+            <div class="module-desc">Grammar, academic writing, professional communication, and IELTS preparation modules.</div>
+            <div class="module-foot">
+              <span class="module-tag">6 Lessons</span>
+              <div class="module-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="dash-bottom">
+          <div class="panel-card">
+            <div class="panel-head">
+              <h3>Recent Activity</h3>
+            </div>
+            <div class="panel-body">
+              <div class="activity-row">
+                <div class="a-dot" style="background:var(--ink)"></div>
+                <div class="a-text"><p>New lesson added to Trading module</p><span>2 hours ago</span></div>
+              </div>
+              <div class="activity-row">
+                <div class="a-dot" style="background:var(--gold)"></div>
+                <div class="a-text"><p>Scholarship application deadline updated</p><span>Yesterday</span></div>
+              </div>
+              <div class="activity-row">
+                <div class="a-dot" style="background:var(--green)"></div>
+                <div class="a-text"><p>Admin replied to your message</p><span>2 days ago</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-head">
+              <h3>Announcements</h3>
+            </div>
+            <div class="panel-body">
+              <div class="ann-row" onclick="switchView('scholarship')">
+                <div class="ann-tag at-gold">Scholarship</div>
+                <div class="ann-title">Merit Excellence Award — Applications Now Open</div>
+                <div class="ann-date">Posted May 1, 2026</div>
+              </div>
+              <div class="ann-row" onclick="switchView('trading')">
+                <div class="ann-tag at-blue">Trading</div>
+                <div class="ann-title">New module: Advanced Risk Management added</div>
+                <div class="ann-date">Posted April 28, 2026</div>
+              </div>
+              <div class="ann-row" onclick="switchView('english')">
+                <div class="ann-tag at-green">English</div>
+                <div class="ann-title">IELTS Preparation series is now live</div>
+                <div class="ann-date">Posted April 24, 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── SCHOLARSHIP ── -->
+      <div class="view" id="view-scholarship">
+        <div class="view-header">
+          <div class="view-eyebrow">Opportunities</div>
+          <h1>Scholarship Board</h1>
+          <p>Scholarship opportunities are posted here by the administration. Read through the details carefully and contact admin through Messages to apply.</p>
+        </div>
+
+        <div class="sch-list">
+
+          <div class="sch-card">
+            <div class="sch-card-top">
+              <div class="sch-icon">🏆</div>
+              <div class="sch-top-info">
+                <h3>Vifo Merit Excellence Award 2026</h3>
+                <div class="sch-pills">
+                  <span class="sch-pill sp-open">● Open</span>
+                  <span class="sch-pill sp-date">Deadline: June 15, 2026</span>
+                </div>
+              </div>
+            </div>
+            <div class="sch-card-body">
+              <p class="sch-body-text">The Vifo Merit Excellence Award recognises outstanding students who demonstrate exceptional commitment, discipline, and potential. This scholarship covers tuition and provides a monthly stipend for the full programme duration.</p>
+              <div class="sch-grid-detail">
+                <div class="sch-detail"><label>Award Value</label><p>$2,400 / year</p></div>
+                <div class="sch-detail"><label>Duration</label><p>12 months (renewable)</p></div>
+                <div class="sch-detail"><label>Seats Available</label><p>3 Students</p></div>
+              </div>
+              <div class="sch-req">
+                <h4>Eligibility</h4>
+                <ul class="sch-req-list">
+                  <li>Enrolled in Vifo for a minimum of 3 months</li>
+                  <li>Consistent attendance and lesson completion</li>
+                  <li>Good standing — no disciplinary record</li>
+                </ul>
+              </div>
+              <div class="sch-note">
+                <strong>Admin Note:</strong> To apply, send a message with the subject "Scholarship Application — Merit Excellence Award 2026" and include a short paragraph about why you deserve this scholarship. All applications are reviewed personally.
+              </div>
+            </div>
+          </div>
+
+          <div class="sch-card">
+            <div class="sch-card-top">
+              <div class="sch-icon">🌍</div>
+              <div class="sch-top-info">
+                <h3>International Access Bursary</h3>
+                <div class="sch-pills">
+                  <span class="sch-pill sp-open">● Open</span>
+                  <span class="sch-pill sp-date">Deadline: July 1, 2026</span>
+                </div>
+              </div>
+            </div>
+            <div class="sch-card-body">
+              <p class="sch-body-text">The International Access Bursary supports students from regions with limited access to quality financial and English education. Awarded based on financial need and demonstrated motivation — partial or full fee waivers available.</p>
+              <div class="sch-grid-detail">
+                <div class="sch-detail"><label>Award Value</label><p>Up to 100% fee waiver</p></div>
+                <div class="sch-detail"><label>Duration</label><p>6 months</p></div>
+                <div class="sch-detail"><label>Seats Available</label><p>5 Students</p></div>
+              </div>
+              <div class="sch-req">
+                <h4>Eligibility</h4>
+                <ul class="sch-req-list">
+                  <li>Demonstrated financial need (brief statement required)</li>
+                  <li>Active participation in at least one module</li>
+                  <li>Clear learning goals and strong motivation</li>
+                </ul>
+              </div>
+              <div class="sch-note">
+                <strong>Admin Note:</strong> If financial barriers are in the way of your learning, please reach out. Send a message titled "Bursary Application — International Access" and share your situation honestly. This is close to my heart.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── TRADING LESSONS ── -->
+      <div class="view" id="view-trading">
+        <div class="view-header">
+          <div class="view-eyebrow">Financial Education</div>
+          <h1>Trading Lessons</h1>
+          <p>Structured lessons on financial markets, technical analysis, chart reading, and professional risk management. Click any lesson to read.</p>
+        </div>
+
+        <div class="lesson-section-label">Module 1 — Foundations of Markets</div>
+        <div class="lessons-list" style="margin-bottom:24px">
+          <div class="lesson-card lc-ink" onclick="openLesson('t1')" style="animation:floatUp 0.4s var(--ease) 0.05s both">
+            <div class="lesson-num ln-ink">01</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Understanding Financial Markets</div>
+              <div class="lesson-sub">What are markets, how they work, key participants and instruments</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>25 min</span>
+            </div>
+          </div>
+          <div class="lesson-card lc-ink" onclick="openLesson('t2')" style="animation:floatUp 0.4s var(--ease) 0.12s both">
+            <div class="lesson-num ln-ink">02</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Reading Candlestick Charts</div>
+              <div class="lesson-sub">Interpreting price action, timeframes, and common patterns</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span>
+            </div>
+          </div>
+          <div class="lesson-card lc-ink" onclick="openLesson('t3')" style="animation:floatUp 0.4s var(--ease) 0.19s both">
+            <div class="lesson-num ln-ink">03</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Support, Resistance & Trend Lines</div>
+              <div class="lesson-sub">Identifying key price levels and drawing trend lines correctly</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-new">New</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>28 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lesson-section-label">Module 2 — Strategy & Risk</div>
+        <div class="lessons-list">
+          <div class="lesson-card lc-gold" onclick="openLesson('t4')" style="animation:floatUp 0.4s var(--ease) 0.05s both">
+            <div class="lesson-num ln-gold">04</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Risk Management Fundamentals</div>
+              <div class="lesson-sub">Position sizing, stop-loss placement, and protecting your capital</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>35 min</span>
+            </div>
+          </div>
+          <div class="lesson-card lc-gold" onclick="openLesson('t5')" style="animation:floatUp 0.4s var(--ease) 0.12s both">
+            <div class="lesson-num ln-gold">05</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Trading Psychology</div>
+              <div class="lesson-sub">Discipline, emotional control, and managing fear and greed</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>32 min</span>
+            </div>
+          </div>
+          <div class="lesson-card lc-gold" onclick="openLesson('t6')" style="animation:floatUp 0.4s var(--ease) 0.19s both">
+            <div class="lesson-num ln-gold">06</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Building a Trading Plan</div>
+              <div class="lesson-sub">Rules, routines, and a structured approach to consistent trading</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-soon">Coming Soon</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>40 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ENGLISH LESSONS ── -->
+      <div class="view" id="view-english">
+        <div class="view-header">
+          <div class="view-eyebrow">Language & Communication</div>
+          <h1>English Lessons</h1>
+          <p>Develop your academic and professional English through structured modules covering grammar, writing, communication, and exam preparation.</p>
+        </div>
+
+        <div class="lesson-section-label">Module 1 — Language Foundations</div>
+        <div class="lessons-list" style="margin-bottom:24px">
+          <div class="lesson-card" onclick="openLesson('e1')">
+            <div class="lesson-num ln-green">01</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Grammar Essentials</div>
+              <div class="lesson-sub">Tenses, sentence structure, articles, and common errors corrected</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>22 min</span>
+            </div>
+          </div>
+          <div class="lesson-card" onclick="openLesson('e2')">
+            <div class="lesson-num ln-green">02</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Vocabulary in Context</div>
+              <div class="lesson-sub">Building range, choosing the right word, and avoiding repetition</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>20 min</span>
+            </div>
+          </div>
+          <div class="lesson-card" onclick="openLesson('e3')">
+            <div class="lesson-num ln-green">03</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Academic Writing Structure</div>
+              <div class="lesson-sub">Essays, thesis statements, body paragraphs, and formal tone</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-new">New</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>35 min</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lesson-section-label">Module 2 — Professional & Exam English</div>
+        <div class="lessons-list">
+          <div class="lesson-card" onclick="openLesson('e4')">
+            <div class="lesson-num ln-ink">04</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Professional Communication</div>
+              <div class="lesson-sub">Emails, formal letters, presentations, and workplace English</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>26 min</span>
+            </div>
+          </div>
+          <div class="lesson-card" onclick="openLesson('e5')">
+            <div class="lesson-num ln-ink">05</div>
+            <div class="lesson-info">
+              <div class="lesson-title">IELTS Preparation</div>
+              <div class="lesson-sub">Exam structure, Writing Tasks 1 & 2, marking criteria and strategy</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-avail">Available</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>45 min</span>
+            </div>
+          </div>
+          <div class="lesson-card" onclick="openLesson('e6')">
+            <div class="lesson-num ln-ink">06</div>
+            <div class="lesson-info">
+              <div class="lesson-title">Speaking & Presentation Skills</div>
+              <div class="lesson-sub">Clarity, confidence, structure, and delivering ideas effectively</div>
+            </div>
+            <div class="lesson-right">
+              <span class="lesson-status ls-soon">Coming Soon</span>
+              <span class="lesson-dur"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>30 min</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MESSAGES ── -->
+      <div class="view" id="view-messages">
+        <div class="view-header" style="margin-bottom:20px">
+          <div class="view-eyebrow">Communication</div>
+          <h1>Messages</h1>
+          <p>Send a message to the admin team. We typically respond within 24 hours.</p>
+        </div>
+
+        <div class="msg-layout">
+          <!-- Left: thread list -->
+          <div class="msg-left">
+            <div class="msg-left-head">Inbox</div>
+            <button class="msg-new-btn">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New Message
+            </button>
+            <div class="thread-list">
+              <div class="thread active">
+                <div class="t-avatar ta-gold">A</div>
+                <div class="t-info">
+                  <div class="t-name">Admin · Vision Forge</div>
+                  <div class="t-preview">Welcome to the Vifo Student Portal...</div>
+                </div>
+                <div class="t-time">Today</div>
+              </div>
+              <div class="thread">
+                <div class="t-avatar">VF</div>
+                <div class="t-info">
+                  <div class="t-name">Support Team</div>
+                  <div class="t-preview">Your question has been received...</div>
+                </div>
+                <div class="t-time">2d ago</div>
+                <div class="t-unread"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: chat -->
+          <div class="msg-chat">
+            <div class="chat-head">
+              <div class="t-avatar ta-gold" style="width:32px;height:32px;font-size:0.7rem">A</div>
+              <div>
+                <h3>Admin · Vision Forge</h3>
+              </div>
+              <span class="online-pill">● Online</span>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+              <div class="msg-bubble mb-admin">
+                <div class="bubble-text">Welcome to the Vifo Student Portal. This is your space to learn, ask questions, and stay updated. Don't hesitate to reach out.</div>
+                <div class="bubble-time">Admin · Today</div>
+              </div>
+              <div class="msg-bubble mb-admin">
+                <div class="bubble-text">Two new scholarship opportunities have been posted — check the Scholarship section when you get a chance.</div>
+                <div class="bubble-time">Admin · Today</div>
+              </div>
+            </div>
+
+            <div class="chat-compose">
+              <div class="compose-wrap">
+                <textarea id="msgInput" placeholder="Write a message to admin…" rows="1"></textarea>
+              </div>
+              <button class="msg-send-btn" id="msgSendBtn">
+                <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<!-- ══════ LESSON MODAL ══════ -->
+<div class="lesson-modal-wrap" id="lessonModal">
+  <div class="lesson-modal">
+    <div class="lm-head">
+      <div>
+        <div class="lm-eyebrow" id="lmEyebrow"></div>
+        <div class="lm-title" id="lmTitle"></div>
+      </div>
+      <button class="lm-close" id="lmClose">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="lm-body">
+      <div class="lm-meta" id="lmMeta"></div>
+      <div class="lm-content" id="lmContent"></div>
+      <div class="lm-keypoints" id="lmKeyPoints"></div>
+      <div class="lm-note" id="lmNote"></div>
+      <div class="lm-actions">
+        <button class="lm-btn lm-btn-outline" onclick="closeLessonModal()">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          Back to Lessons
+        </button>
+        <button class="lm-btn lm-btn-primary" id="lmMsgBtn">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Ask Admin a Question
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+'use strict';
+
+/* ── Date in topbar ── */
+const d = new Date();
+document.getElementById('topbarDate').textContent =
+  d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+
+/* ── Nav switching ── */
+const TITLES = {
+  dashboard:   'Dashboard',
+  scholarship: 'Scholarship',
+  trading:     'Trading Lessons',
+  english:     'English Lessons',
+  messages:    'Messages'
+};
+
+function switchView(id) {
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.toggle('active', n.dataset.view === id);
+  });
+  document.querySelectorAll('.view').forEach(v => {
+    v.classList.toggle('active', v.id === 'view-' + id);
+  });
+  document.getElementById('topbarTitle').textContent = TITLES[id] || id;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('visible');
+  document.getElementById('sidebarToggle').classList.remove('open');
+  document.body.style.overflow = '';
+}
+window.switchView = switchView;
+
+document.querySelectorAll('.nav-item[data-view]').forEach(item => {
+  item.addEventListener('click', () => switchView(item.dataset.view));
+});
+
+/* ── Mobile sidebar ── */
+const toggle  = document.getElementById('sidebarToggle');
+const overlay = document.getElementById('sidebarOverlay');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => {
+  const open = sidebar.classList.toggle('open');
+  toggle.classList.toggle('open', open);
+  overlay.classList.toggle('visible', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('visible');
+  document.body.style.overflow = '';
+});
+
+/* ── Staggered load animation ── */
+setTimeout(() => {
+  document.querySelectorAll('.stat-card, .module-card, .panel-card, .ann-row').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(14px)';
+    el.style.transition = `opacity 0.5s cubic-bezier(0.22,1,0.36,1) ${0.08 + i * 0.06}s, transform 0.5s cubic-bezier(0.22,1,0.36,1) ${0.08 + i * 0.06}s`;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }));
+  });
+}, 50);
+
+/* ── Lesson data ── */
+const LESSONS = {
+  t1: {
+    eyebrow: 'Trading · Module 1',
+    title: 'Understanding Financial Markets',
+    meta: [
+      { icon: 'clock', text: '25 min read' },
+      { icon: 'book', text: 'Foundations' }
+    ],
+    content: `<p>Financial markets are organised platforms or systems where buyers and sellers come together to trade financial assets — including stocks, bonds, currencies, commodities, and derivatives. Understanding these markets is the essential first step before making any trading decision.</p>
+<p><strong>Types of Markets:</strong> The main categories are the stock market (equities), the foreign exchange market (Forex), the commodities market, and the derivatives market. Each has its own characteristics, participants, and rules. As a beginner, focus on understanding one market deeply before spreading attention across others.</p>
+<p><strong>Key Participants:</strong> Markets involve retail traders, institutional investors, central banks, market makers, and brokers. Each plays a different role. Institutional players move large volumes and can shift price — understanding their behaviour is part of reading the market professionally.</p>`,
+    keyPoints: [
+      'Markets exist to allow price discovery and transfer of risk between participants',
+      'Stock, Forex, commodities, and derivatives markets each have distinct rules and behaviours',
+      'Institutional participants move markets more than retail traders — follow the volume',
+      'Liquidity is essential: always trade in markets with sufficient volume to enter and exit cleanly'
+    ],
+    note: 'Admin Note: Before you look at a single chart, spend time understanding what you are actually trading and why prices move. Most new traders skip this step — the ones who don\'t have a genuine edge.'
+  },
+  t2: {
+    eyebrow: 'Trading · Module 1',
+    title: 'Reading Candlestick Charts',
+    meta: [
+      { icon: 'clock', text: '30 min read' },
+      { icon: 'book', text: 'Technical Analysis' }
+    ],
+    content: `<p>Candlestick charts are the most widely used price chart in trading. Each candlestick represents price movement over a specific time period — showing the open, high, low, and close (OHLC) for that period. Reading them accurately is a foundational skill.</p>
+<p><strong>Anatomy of a Candle:</strong> The body shows the difference between open and close. The wicks (shadows) show the high and low extremes. A green (or white) candle closes higher than it opened — bullish. A red (or black) candle closes lower — bearish. The size of the body and wicks carries meaning.</p>
+<p><strong>Key Patterns:</strong> Doji (indecision), Hammer (potential reversal from low), Engulfing (strong momentum shift), and Shooting Star (potential reversal from high) are patterns worth learning first. No pattern is 100% reliable — they are signals to investigate further, not commands to enter a trade.</p>`,
+    keyPoints: [
+      'Each candle = open, high, low, close for a given time period',
+      'Body = distance between open and close; wick = high/low extremes',
+      'Green/white candle = price closed higher; Red/black = closed lower',
+      'Patterns are signals — always confirm with context, volume, and key levels'
+    ],
+    note: 'Admin Note: Learn to read candles on higher timeframes (daily, 4H) before studying lower ones. The noise on 1-minute charts confuses beginners. Start with the daily chart and build downward.'
+  },
+  t3: {
+    eyebrow: 'Trading · Module 1',
+    title: 'Support, Resistance & Trend Lines',
+    meta: [
+      { icon: 'clock', text: '28 min read' },
+      { icon: 'book', text: 'Technical Analysis' }
+    ],
+    content: `<p>Support and resistance are among the most important concepts in technical analysis. Support is a price level where buying interest is strong enough to prevent further decline. Resistance is where selling pressure prevents further rise. These levels act as decision points in the market.</p>
+<p><strong>How to Identify Them:</strong> Look for price levels where the market has reversed multiple times. The more times a level has been tested and held, the more significant it is. Round numbers often act as psychological support/resistance. Previous highs and lows are natural reference points.</p>
+<p><strong>Trend Lines:</strong> A trend line connects a series of higher lows (uptrend) or lower highs (downtrend). It gives you a visual representation of the market's direction and helps you identify potential entry or exit zones. A valid trend line needs at least two points of contact — three or more confirms strength.</p>`,
+    keyPoints: [
+      'Support = price floor where buyers step in; Resistance = ceiling where sellers dominate',
+      'The more times a level is tested and holds, the more reliable it becomes',
+      'Broken support often becomes new resistance — this is called a role reversal',
+      'Trend lines require at least 2 touches; 3+ touches confirm the trend is valid'
+    ],
+    note: 'Admin Note: Don\'t draw trend lines mechanically. Think about what the line represents — where is the market finding value? Where are traders consistently making decisions? That\'s what you\'re mapping.'
+  },
+  t4: {
+    eyebrow: 'Trading · Module 2',
+    title: 'Risk Management Fundamentals',
+    meta: [
+      { icon: 'clock', text: '35 min read' },
+      { icon: 'book', text: 'Risk & Strategy' }
+    ],
+    content: `<p>Risk management is what separates long-term successful traders from those who blow accounts. Without it, even a good strategy will eventually fail. The goal of risk management is not to avoid losses — losses are part of trading — but to ensure that no single loss or series of losses destroys your account.</p>
+<p><strong>Position Sizing:</strong> Never risk more than 1–2% of your total trading capital on a single trade. This way, even a run of ten losing trades only reduces your account by 10–20%, leaving you fully capable of recovery. Many experienced traders risk even less per trade.</p>
+<p><strong>Stop-Loss Placement:</strong> A stop-loss is a pre-set price at which your trade closes automatically to limit your loss. Place it at a technically meaningful level — beyond a support zone, below a key level — not an arbitrary number. Moving your stop-loss further away to avoid being stopped out is one of the most destructive trading habits.</p>`,
+    keyPoints: [
+      'Risk no more than 1–2% of capital per trade — this protects you through losing streaks',
+      'Place stop-loss at technically meaningful levels, not random distances',
+      'Never move your stop-loss wider once a trade is open — that defeats its purpose',
+      'Risk-reward ratio matters: aim for at least 1:2 (risk $1 to potentially gain $2)'
+    ],
+    note: 'Admin Note: Most students want to learn entry strategies first. The truth is, your entry matters far less than how you manage risk once you\'re in the trade. Focus here first.'
+  },
+  t5: {
+    eyebrow: 'Trading · Module 2',
+    title: 'Trading Psychology',
+    meta: [
+      { icon: 'clock', text: '32 min read' },
+      { icon: 'book', text: 'Mindset' }
+    ],
+    content: `<p>Trading is as much a mental discipline as it is a technical one. The most common reason traders fail is not a bad strategy — it is the inability to follow their strategy consistently. Emotions like fear, greed, overconfidence, and revenge-trading destroy accounts far more reliably than poor analysis.</p>
+<p><strong>Fear and Greed:</strong> Fear causes traders to exit profitable trades too early or avoid taking valid setups. Greed causes them to hold losing trades too long, overtrade, or increase position sizes after a win. Recognising which emotion is driving a decision is the first step to controlling it.</p>
+<p><strong>The Discipline Habit:</strong> Successful trading is built on routine. A pre-market routine, a trade journal, fixed rules for entering and exiting, and a review process after each trading session. Process over outcome — judge yourself on whether you followed your plan, not whether the trade made money.</p>`,
+    keyPoints: [
+      'Most trading failures come from psychology, not strategy — this is the most important module',
+      'Fear = exiting too early or missing setups. Greed = holding losers, overtrading',
+      'Revenge trading (trying to recover losses immediately) is the fastest way to destroy a account',
+      'Judge yourself on process — did you follow your plan? Not on the outcome of a single trade'
+    ],
+    note: 'Admin Note: Keep a trade journal. Write down why you entered, where your stop was, what you expected, and how you felt. Read it back weekly. Patterns in your behaviour will become obvious very quickly.'
+  },
+  t6: {
+    eyebrow: 'Trading · Module 2',
+    title: 'Building a Trading Plan',
+    meta: [
+      { icon: 'clock', text: '40 min read' },
+      { icon: 'book', text: 'Strategy' }
+    ],
+    content: `<p>A trading plan is a written document that defines every aspect of how you trade: what you trade, when you trade, how you manage risk, what your entry criteria are, and how you review your performance. It is your business plan. Trading without one is guessing.</p>`,
+    keyPoints: [
+      'A trading plan removes emotion from decision-making — everything is decided in advance',
+      'Define: market, timeframe, entry criteria, exit criteria, maximum daily loss limit',
+      'Back-test your rules on historical data before risking real capital',
+      'Review and refine your plan monthly based on journal data'
+    ],
+    note: 'Admin Note: This lesson will be published shortly. In the meantime, start building your plan — write down your rules for entering and exiting trades. The act of writing forces clarity.'
+  },
+  e1: {
+    eyebrow: 'English · Module 1',
+    title: 'Grammar Essentials',
+    meta: [
+      { icon: 'clock', text: '22 min read' },
+      { icon: 'book', text: 'Foundations' }
+    ],
+    content: `<p>Grammar is the structural foundation of English. Without it, even a rich vocabulary produces unclear, unconvincing communication. This lesson focuses on the rules most commonly misunderstood by intermediate-level learners.</p>
+<p><strong>Tenses:</strong> English has 12 main tenses, but the most important for daily use are the simple present, simple past, present perfect, and future simple. The most frequent mistake is confusing simple past ("I went") with present perfect ("I have been"). Use present perfect when the exact time is unspecified or the action still has relevance to now.</p>
+<p><strong>Articles — The, A, An:</strong> Use "the" for specific, known nouns. Use "a/an" for non-specific, first-mention nouns. Many languages have no articles at all, making this one of the hardest rules for learners. When in doubt, ask: does your reader already know which specific thing you mean? If yes — use "the".</p>`,
+    keyPoints: [
+      'Present perfect = action connected to now; simple past = completed action at a specific time',
+      '"The" = specific/known; "A/An" = non-specific; some nouns take no article',
+      'Subject-verb agreement: singular subjects take singular verbs — always',
+      'Avoid sentence fragments: every sentence needs a subject and a verb'
+    ],
+    note: 'Admin Note: Grammar mistakes do not usually prevent understanding — but they do affect how professional you appear. In academic and business contexts, precision in grammar signals intelligence and care. It is worth the effort.'
+  },
+  e2: {
+    eyebrow: 'English · Module 1',
+    title: 'Vocabulary in Context',
+    meta: [
+      { icon: 'clock', text: '20 min read' },
+      { icon: 'book', text: 'Foundations' }
+    ],
+    content: `<p>Vocabulary range is one of the four criteria on which English proficiency is assessed — whether in IELTS, academic writing, or professional communication. It is not about knowing rare words. It is about choosing the right word for the right context.</p>
+<p><strong>Collocations:</strong> Words that naturally appear together in English — "make a decision" (not "do a decision"), "strong coffee" (not "powerful coffee"), "take a risk" (not "do a risk"). Learning words in their natural collocations is far more useful than memorising isolated definitions.</p>
+<p><strong>Avoiding Repetition:</strong> Using the same word repeatedly in a piece of writing weakens it. Build a habit of using synonyms — but check that the synonym carries the same meaning in context. "Happy" and "ecstatic" are not always interchangeable. Use a collocations dictionary or context-based resource rather than a plain thesaurus.</p>`,
+    keyPoints: [
+      'Collocations matter: "make a decision," "do research," "take a risk" — learn words in pairs',
+      'Context determines the correct word — never substitute blindly from a thesaurus',
+      'Academic vocabulary: words like "demonstrate," "analyse," "evaluate" signal sophistication',
+      'Read widely in English — vocabulary is built through exposure far more than memorisation'
+    ],
+    note: 'Admin Note: The single best vocabulary habit is reading daily in English — articles, reports, essays. Underline words you don\'t know. Look them up. Write them in a sentence of your own. Do this for 15 minutes a day and your vocabulary will expand dramatically within months.'
+  },
+  e3: {
+    eyebrow: 'English · Module 1',
+    title: 'Academic Writing Structure',
+    meta: [
+      { icon: 'clock', text: '35 min read' },
+      { icon: 'book', text: 'Academic Writing' }
+    ],
+    content: `<p>Academic writing follows a clear, logical structure: introduction, body, conclusion. Every paragraph has a purpose. Every sentence advances an argument. Deviation from this structure makes writing difficult to follow and weakens its overall impact.</p>
+<p><strong>The Thesis Statement:</strong> The thesis is the central argument of your essay — it tells the reader exactly what position you are taking and why. A strong thesis is specific, arguable, and supported by everything that follows. A weak thesis is vague ("This essay will discuss...") or merely states a fact rather than an argument.</p>
+<p><strong>Formal Tone:</strong> Academic writing avoids contractions ("do not" not "don't"), slang, and casual phrasing. It favours precision over impression. Sentences should be clear and direct — long, winding sentences with multiple clauses usually signal unclear thinking. One idea per sentence. One idea per paragraph.</p>`,
+    keyPoints: [
+      'Introduction → Body Paragraphs → Conclusion: every academic essay follows this structure',
+      'Each body paragraph: one claim, evidence, explanation of why evidence supports the claim',
+      'Thesis = your specific, arguable central position — stated clearly in the introduction',
+      'Formal tone: no contractions, no slang, no first person unless your discipline allows it'
+    ],
+    note: 'Admin Note: The most common mistake students make is writing long sentences to sound intelligent. The opposite is true — clarity signals intelligence. Write short, precise sentences. If a sentence needs multiple commas to work, break it into two.'
+  },
+  e4: {
+    eyebrow: 'English · Module 2',
+    title: 'Professional Communication',
+    meta: [
+      { icon: 'clock', text: '26 min read' },
+      { icon: 'book', text: 'Professional Skills' }
+    ],
+    content: `<p>Professional communication prioritises clarity, brevity, and the reader's time. Whether you are writing a business email, delivering a presentation, or communicating in the workplace, the ability to express ideas professionally is one of the most valued skills across every industry.</p>
+<p><strong>Business Emails:</strong> Every professional email needs: a clear subject line, a brief and purposeful opening, a body that states its main point in the first sentence, and a professional close. Avoid vague subject lines ("Question") — use specific ones ("Clarification needed on Project Deadline — 12 May"). Keep paragraphs short. Use bullet points for multiple items.</p>
+<p><strong>Formal Letters:</strong> Formal letters follow a rigid structure: your address, recipient's address, date, formal salutation, body, and formal close. "Yours sincerely" is used when you know the recipient's name. "Yours faithfully" when you used "Dear Sir/Madam." This distinction is commonly tested and professionally significant.</p>`,
+    keyPoints: [
+      'Business emails: specific subject line, purpose in sentence one, short paragraphs',
+      '"Yours sincerely" = you know their name; "Yours faithfully" = you used Dear Sir/Madam',
+      'Professional language is direct, concrete, and free of filler ("I just wanted to reach out...")',
+      'Presentation structure: tell them what you\'ll say, say it, tell them what you said'
+    ],
+    note: 'Admin Note: Study real professional correspondence whenever you can — annual reports, official letters, business articles. Notice how competent writers structure sentences. Consciously adopt those patterns in your own writing.'
+  },
+  e5: {
+    eyebrow: 'English · Module 2',
+    title: 'IELTS Preparation',
+    meta: [
+      { icon: 'clock', text: '45 min read' },
+      { icon: 'book', text: 'Exam Preparation' }
+    ],
+    content: `<p>IELTS (International English Language Testing System) is accepted by universities, employers, and immigration authorities in over 140 countries. Understanding the format and marking criteria is essential for achieving your target band score.</p>
+<p><strong>Exam Structure:</strong> Four sections — Listening (30 min), Reading (60 min), Writing (60 min), and Speaking (11–14 min). Each scored on a 0–9 band scale. Your overall score is the average of all four. The Academic version (for university applications) differs from General Training (for migration/work) primarily in Reading and Writing.</p>
+<p><strong>Writing Tasks:</strong> Task 1 (150+ words) requires describing a visual — graph, chart, diagram, or map. Task 2 (250+ words) is an essay responding to an argument or problem. Task 2 carries twice the weight of Task 1 in your Writing score. Both are assessed on: Task Response, Coherence & Cohesion, Lexical Resource, and Grammatical Range & Accuracy.</p>`,
+    keyPoints: [
+      'Four sections: Listening, Reading, Writing (60 min), Speaking — each scored 0–9',
+      'Academic vs General Training differ in Reading and Writing only',
+      'Writing Task 2 carries double the marks of Task 1 — prioritise it in preparation',
+      'Four marking criteria, each equally weighted — weakness in one limits your overall score'
+    ],
+    note: 'Admin Note: Many students underperform not because their English is weak, but because they are unfamiliar with the format. Spend at least four weeks doing timed practice tests under real exam conditions. Familiarity reduces anxiety and lets your true ability show.'
+  },
+  e6: {
+    eyebrow: 'English · Module 2',
+    title: 'Speaking & Presentation Skills',
+    meta: [
+      { icon: 'clock', text: '30 min read' },
+      { icon: 'book', text: 'Communication' }
+    ],
+    content: `<p>This lesson is coming soon. It will cover clarity, confidence, and the structural principles behind effective spoken English — whether in an IELTS Speaking test, a job interview, or a professional presentation.</p>`,
+    keyPoints: [
+      'Clarity over speed — slow, clear speech is always more impressive than fast, unclear delivery',
+      'Structure spoken content: main point first, supporting points after',
+      'Filler words ("um," "like," "you know") weaken your credibility — practise pausing instead',
+      'Confidence comes from preparation — the more you practise, the less room anxiety has'
+    ],
+    note: 'Admin Note: This module will be posted shortly. If you have specific questions about speaking or presentations in the meantime, send a message — I\'m happy to address your situation directly.'
+  }
+};
+
+/* ── Lesson modal ── */
+function openLesson(id) {
+  const d = LESSONS[id];
+  if (!d) return;
+
+  document.getElementById('lmEyebrow').textContent = d.eyebrow;
+  document.getElementById('lmTitle').textContent   = d.title;
+
+  document.getElementById('lmMeta').innerHTML = d.meta.map(m => `
+    <div class="lm-meta-item">
+      <svg viewBox="0 0 24 24">
+        ${m.icon === 'clock'
+          ? '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+          : '<path d="M4 7h16"/><path d="M4 12h8"/><path d="M4 17h8"/>'}
+      </svg>
+      ${m.text}
+    </div>
+  `).join('');
+
+  document.getElementById('lmContent').innerHTML = d.content;
+  document.getElementById('lmKeyPoints').innerHTML =
+    `<h4>Key Takeaways</h4><ul>${d.keyPoints.map(k => `<li>${k}</li>`).join('')}</ul>`;
+  document.getElementById('lmNote').innerHTML = d.note;
+
+  document.getElementById('lmMsgBtn').onclick = function() {
+    closeLessonModal();
+    switchView('messages');
+    setTimeout(() => {
+      const inp = document.getElementById('msgInput');
+      if (inp) { inp.value = `Hi, I have a question about: "${d.title}". `; inp.focus(); }
+    }, 400);
+  };
+
+  document.getElementById('lessonModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+window.openLesson = openLesson;
+
+window.closeLessonModal = function() {
+  document.getElementById('lessonModal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+document.getElementById('lmClose').addEventListener('click', closeLessonModal);
+document.getElementById('lessonModal').addEventListener('click', function(e) {
+  if (e.target === this) closeLessonModal();
+});
+
+/* ── Messaging ── */
+const chatMessages = document.getElementById('chatMessages');
+const msgInput     = document.getElementById('msgInput');
+const msgSendBtn   = document.getElementById('msgSendBtn');
+
+function sendMessage() {
+  const text = msgInput.value.trim();
+  if (!text) return;
+
+  const b = document.createElement('div');
+  b.className = 'msg-bubble mb-student';
+  b.innerHTML = `
+    <div class="bubble-text">${text.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+    <div class="bubble-time">You · Just now</div>
+  `;
+  chatMessages.appendChild(b);
+  msgInput.value = '';
+  msgInput.style.height = 'auto';
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  setTimeout(() => {
+    const r = document.createElement('div');
+    r.className = 'msg-bubble mb-admin';
+    r.innerHTML = `
+      <div class="bubble-text">Thank you for your message. We have received it and will respond within 24 hours.</div>
+      <div class="bubble-time">Admin · Just now</div>
+    `;
+    chatMessages.appendChild(r);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }, 1600);
+}
+
+msgSendBtn.addEventListener('click', sendMessage);
+msgInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+msgInput.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 88) + 'px';
+});
+
+})();
+</script>
+</body>
+</html>

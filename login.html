@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="color-scheme" content="light"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join Vision Forge — Sign In & Create Account</title>
+  <meta name="description" content="Sign in or create your Vision Forge account and join the movement."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor" aria-hidden="true"></div>
+
+<div class="auth-page">
+
+  <!-- ── LEFT: Academic brand panel ── -->
+  <div class="auth-left">
+    <div class="auth-left-bg" style="background-image:url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=900&q=80');"></div>
+    <div class="auth-left-pattern"></div>
+    <div class="auth-left-gradient"></div>
+    <div class="auth-left-content">
+
+      <a href="index.html" class="auth-logo" aria-label="Vision Forge Home">
+        <img src="ViFo_dark_mode.png" alt="Vifo Logo" style="height: 88px; width: auto; display: block; margin: -20px 0;"/>
+      </a>
+
+      <div class="auth-middle">
+        <div class="auth-quote">
+          <p>Strong minds build strong societies. Leadership begins with self-mastery, vision, and disciplined execution.</p>
+          <span>— Vision Forge Core Philosophy</span>
+        </div>
+        <h2>Build Your Mind.<br>Forge Your <em>Purpose.</em></h2>
+        <p>Join Vision Forge and become part of a movement dedicated to developing disciplined thinkers, strategic leaders, and purpose-driven individuals who shape a better world.</p>
+        <div class="auth-values">
+          <div class="auth-value"><div class="auth-value-dot"></div><span>Loyalty &amp; Integrity</span></div>
+          <div class="auth-value"><div class="auth-value-dot"></div><span>Strategic Thinking &amp; Discipline</span></div>
+          <div class="auth-value"><div class="auth-value-dot"></div><span>Service &amp; Continuous Growth</span></div>
+          <div class="auth-value"><div class="auth-value-dot"></div><span>Intellectual Rigor</span></div>
+        </div>
+        <div class="auth-stats">
+          <div class="auth-stat">
+            <div class="auth-stat-num">500+</div>
+            <div class="auth-stat-lbl">Members</div>
+          </div>
+          <div class="auth-stat">
+            <div class="auth-stat-num">12</div>
+            <div class="auth-stat-lbl">Programs</div>
+          </div>
+          <div class="auth-stat">
+            <div class="auth-stat-num">6</div>
+            <div class="auth-stat-lbl">Cities</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-foot">
+        &copy; 2025 Vision Forge &nbsp;·&nbsp; NUTECH, Islamabad &nbsp;·&nbsp; Building Minds • Forging Leaders
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Auth forms ── -->
+  <div class="auth-right">
+    <div class="auth-right-inner">
+
+      <a href="index.html" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to home
+      </a>
+
+      <!-- Tabs -->
+      <div class="auth-tabs" role="tablist" aria-label="Authentication options">
+        <button class="auth-tab active" data-target="panel-login" role="tab" aria-selected="true">Sign In</button>
+        <button class="auth-tab" data-target="panel-signup" role="tab" aria-selected="false">Create Account</button>
+      </div>
+
+      <!-- ═══ LOGIN PANEL ═══ -->
+      <div id="panel-login" class="auth-panel active" role="tabpanel">
+        <h3>Welcome Back</h3>
+        <p class="auth-sub">Sign in to continue your leadership journey.</p>
+
+        <div id="login-success" class="auth-success" role="status">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          Signed in successfully! Welcome back.
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="auth-form-group">
+            <label for="login-email">Email Address</label>
+            <input id="login-email" type="email" class="auth-control" placeholder="your@email.com" required autocomplete="email"/>
+          </div>
+          <div class="auth-form-group">
+            <label for="login-password">Password</label>
+            <div class="pw-wrap">
+              <input id="login-password" type="password" class="auth-control" placeholder="Your password" required autocomplete="current-password"/>
+              <button type="button" class="pw-toggle" aria-label="Toggle password visibility"><span class="eye-icon">👁</span></button>
+            </div>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+          <label class="checkbox-group">
+            <input type="checkbox"/>
+            <span>Keep me signed in on this device</span>
+          </label>
+          <div class="auth-actions">
+            <button type="submit" class="btn-full btn-navy">Sign In to Vision Forge</button>
+            <div class="auth-divider"><span>or</span></div>
+            <button type="button" class="btn-full btn-ghost-full" onclick="document.querySelector('[data-target=panel-signup]').click()">
+              Create a New Account
+            </button>
+          </div>
+        </form>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="document.querySelector('[data-target=panel-signup]').click();return false;">Sign up free</a></p>
+      </div>
+
+      <!-- ═══ SIGN UP PANEL ═══ -->
+      <div id="panel-signup" class="auth-panel" role="tabpanel">
+        <h3>Join the Movement</h3>
+        <p class="auth-sub">Create your Vision Forge account — free, always.</p>
+
+        <div id="signup-success" class="auth-success" role="status">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          Account created! Welcome to Vision Forge.
+        </div>
+
+        <form id="signup-form" novalidate>
+
+          <!-- Name row -->
+          <div class="form-row form-row-3">
+            <div class="auth-form-group">
+              <label for="s-firstname">First Name</label>
+              <input id="s-firstname" type="text" class="auth-control" placeholder="First" required autocomplete="given-name"/>
+            </div>
+            <div class="auth-form-group">
+              <label for="s-middlename">Middle <span class="optional">(opt.)</span></label>
+              <input id="s-middlename" type="text" class="auth-control" placeholder="Middle" autocomplete="additional-name"/>
+            </div>
+            <div class="auth-form-group">
+              <label for="s-lastname">Last Name</label>
+              <input id="s-lastname" type="text" class="auth-control" placeholder="Last" required autocomplete="family-name"/>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label for="s-email">Email Address</label>
+            <input id="s-email" type="email" class="auth-control" placeholder="your@email.com" required autocomplete="email"/>
+          </div>
+
+          <div class="auth-form-group">
+            <label for="s-password">Password</label>
+            <div class="pw-wrap">
+              <input id="s-password" type="password" class="auth-control" placeholder="Minimum 8 characters" required minlength="8" autocomplete="new-password"/>
+              <button type="button" class="pw-toggle" aria-label="Toggle password visibility"><span class="eye-icon">👁</span></button>
+            </div>
+          </div>
+
+          <div class="form-section-divider"></div>
+
+          <div class="auth-form-group">
+            <label for="s-phone">WhatsApp Number</label>
+            <div class="phone-group">
+              <select id="s-phone-code" class="auth-control" required aria-label="Country calling code">
+                <option value="+93" selected>🇦🇫 +93</option>
+                <option value="+880">🇧🇩 +880</option>
+                <option value="+86">🇨🇳 +86</option>
+                <option value="+20">🇪🇬 +20</option>
+                <option value="+33">🇫🇷 +33</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+91">🇮🇳 +91</option>
+                <option value="+62">🇮🇩 +62</option>
+                <option value="+98">🇮🇷 +98</option>
+                <option value="+964">🇮🇶 +964</option>
+                <option value="+39">🇮🇹 +39</option>
+                <option value="+81">🇯🇵 +81</option>
+                <option value="+962">🇯🇴 +962</option>
+                <option value="+60">🇲🇾 +60</option>
+                <option value="+234">🇳🇬 +234</option>
+                <option value="+92">🇵🇰 +92</option>
+                <option value="+970">🇵🇸 +970</option>
+                <option value="+63">🇵🇭 +63</option>
+                <option value="+966">🇸🇦 +966</option>
+                <option value="+65">🇸🇬 +65</option>
+                <option value="+27">🇿🇦 +27</option>
+                <option value="+82">🇰🇷 +82</option>
+                <option value="+34">🇪🇸 +34</option>
+                <option value="+90">🇹🇷 +90</option>
+                <option value="+971">🇦🇪 +971</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+998">🇺🇿 +998</option>
+              </select>
+              <input id="s-phone" type="tel" class="auth-control" placeholder="3XX XXXXXXX" required autocomplete="tel-national" pattern="[0-9\s\-]{6,15}"/>
+            </div>
+          </div>
+
+          <div class="form-row form-row-2">
+            <div class="auth-form-group">
+              <label for="s-country">Country</label>
+              <select id="s-country" class="auth-control" required>
+                <option value="" disabled>Select country</option>
+                <option selected>Afghanistan</option>
+                <option>Australia</option>
+                <option>Bangladesh</option>
+                <option>Canada</option>
+                <option>China</option>
+                <option>Egypt</option>
+                <option>France</option>
+                <option>Germany</option>
+                <option>India</option>
+                <option>Indonesia</option>
+                <option>Iran</option>
+                <option>Iraq</option>
+                <option>Italy</option>
+                <option>Japan</option>
+                <option>Jordan</option>
+                <option>Malaysia</option>
+                <option>Nigeria</option>
+                <option>Pakistan</option>
+                <option>Palestine</option>
+                <option>Philippines</option>
+                <option>Qatar</option>
+                <option>Saudi Arabia</option>
+                <option>South Africa</option>
+                <option>Turkey</option>
+                <option>UAE</option>
+                <option>United Kingdom</option>
+                <option>United States</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="auth-form-group">
+              <label for="s-province">Province / State</label>
+              <input id="s-province" type="text" class="auth-control" placeholder="e.g. Punjab" required autocomplete="address-level1" value="Kabul"/>
+            </div>
+          </div>
+
+          <div class="auth-form-group">
+            <label for="s-age">Age <span class="optional">(optional)</span></label>
+            <input id="s-age" type="number" class="auth-control" placeholder="e.g. 22" min="13" max="100" style="max-width:150px"/>
+          </div>
+
+          <label class="checkbox-group">
+            <input type="checkbox" required id="s-terms"/>
+            <span>I agree to Vision Forge's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+          </label>
+
+          <div class="auth-actions">
+            <button type="submit" class="btn-full btn-navy">Create My Account &rarr;</button>
+            <div class="auth-divider"><span>already a member?</span></div>
+            <button type="button" class="btn-full btn-ghost-full" onclick="document.querySelector('[data-target=panel-login]').click()">
+              Sign In Instead
+            </button>
+          </div>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="#" onclick="document.querySelector('[data-target=panel-login]').click();return false;">Sign in</a></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
