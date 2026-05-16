@@ -78,11 +78,10 @@ a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;}
 .chdr{background:linear-gradient(135deg,var(--navy) 0%,#1a3254 60%,#162d4f 100%);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;}
 .chdr::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:40px 40px;}
 .chdr::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light),transparent);}
-.corg{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
-.clm{width:38px;height:38px;border-radius:9px;background:rgba(168,200,248,.12);border:1px solid rgba(168,200,248,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.clm svg{width:18px;height:18px;}
-.oname{font-size:.94rem;font-weight:700;color:#fff;}
-.osub{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.38);}
+
+/* LOGO IN HEADER */
+.chdr-logo{position:relative;z-index:1;display:flex;align-items:center;}
+.chdr-logo svg{height:38px;width:auto;display:block;}
 
 /* BADGE */
 .vbadge{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;position:relative;z-index:1;}
@@ -224,6 +223,7 @@ a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;}
   .clink{padding:8px 12px;font-size:.72rem;}
   .nback{padding:7px 13px;font-size:.7rem;}
   .lhdr{padding:24px 18px 18px;}
+  .chdr-logo svg{height:30px;}
 }
 
 /* ── STANDARD PHONE (≤480px) ── */
@@ -243,9 +243,7 @@ a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;}
   .marr{width:26px;height:26px;}
   .ph h1{font-size:1.7rem;}
   .pfoot{font-size:.65rem;}
-  .oname{font-size:.85rem;}
-  .osub{font-size:.56rem;}
-  .clm{width:32px;height:32px;}
+  .chdr-logo svg{height:26px;}
 }
 
 /* ── SMALL PHONE (≤390px) ── */
@@ -265,6 +263,7 @@ a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;}
   .btxt{font-size:.8rem;}
   .nback span{display:none;}
   .hval{font-size:.64rem;}
+  .chdr-logo svg{height:24px;}
 }
 
 /* ── VERY SMALL PHONE (≤360px) ── */
@@ -451,7 +450,8 @@ const IC = {
   pin:`<svg viewBox="0 0 24 24" fill="var(--gold)" width="14" height="14"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`
 };
 
-const LM = `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><g fill="rgba(168,200,248,0.85)"><path d="M99,82 Q68,52 33,67 Q32,52 46,48 Q73,49 100,82Z"/><path d="M108,83 Q96,43 58,38 Q65,25 79,28 Q102,43 109,84Z"/><path d="M115,90 Q125,49 94,26 Q107,18 117,28 Q130,51 116,91Z"/><path d="M117,99 Q147,68 132,33 Q147,32 151,46 Q150,73 117,100Z"/><path d="M116,108 Q156,96 161,58 Q174,65 171,79 Q156,102 115,109Z"/><path d="M109,115 Q151,125 173,94 Q181,107 171,117 Q148,130 108,116Z"/><path d="M100,117 Q131,147 166,132 Q167,147 153,151 Q126,150 99,117Z"/><path d="M91,116 Q103,156 141,161 Q134,174 120,171 Q97,156 90,115Z"/><path d="M84,109 Q74,151 105,173 Q92,181 82,171 Q69,148 83,108Z"/><path d="M82,100 Q52,131 67,166 Q52,167 48,153 Q49,126 82,99Z"/><path d="M83,91 Q43,103 38,141 Q25,134 28,120 Q43,97 84,90Z"/><path d="M90,84 Q48,74 26,105 Q18,92 28,82 Q51,69 91,83Z"/></g></svg>`;
+/* ── YOUR REAL LOGO (light version — white on transparent, suits the dark navy header) ── */
+const VIFO_LOGO = `<svg width="530" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 530 200"><g fill="rgba(255,255,255,0.92)"><path d="M 99.06,82.02 Q 68.54,52.47 33.49,67.56 Q 32.83,52.97 46.77,48.60 Q 73.68,49.44 100.94,82.02 Z"/><path d="M 108.17,83.96 Q 96.52,43.11 58.62,38.65 Q 65.35,25.68 79.60,28.87 Q 102.49,43.05 109.80,84.90 Z"/><path d="M 115.10,90.20 Q 125.43,48.99 94.84,26.18 Q 107.15,18.31 117.90,28.20 Q 130.63,51.93 116.04,91.83 Z"/><path d="M 117.98,99.06 Q 147.53,68.54 132.44,33.49 Q 147.03,32.83 151.40,46.77 Q 150.56,73.68 117.98,100.94 Z"/><path d="M 116.04,108.17 Q 156.89,96.52 161.35,58.62 Q 174.32,65.35 171.13,79.60 Q 156.95,102.49 115.10,109.80 Z"/><path d="M 109.80,115.10 Q 151.01,125.43 173.82,94.84 Q 181.69,107.15 171.80,117.90 Q 148.07,130.63 108.17,116.04 Z"/><path d="M 100.94,117.98 Q 131.46,147.53 166.51,132.44 Q 167.17,147.03 153.23,151.40 Q 126.32,150.56 99.06,117.98 Z"/><path d="M 91.83,116.04 Q 103.48,156.89 141.38,161.35 Q 134.65,174.32 120.40,171.13 Q 97.51,156.95 90.20,115.10 Z"/><path d="M 84.90,109.80 Q 74.57,151.01 105.16,173.82 Q 92.85,181.69 82.10,171.80 Q 69.37,148.07 83.96,108.17 Z"/><path d="M 82.02,100.94 Q 52.47,131.46 67.56,166.51 Q 52.97,167.17 48.60,153.23 Q 49.44,126.32 82.02,99.06 Z"/><path d="M 83.96,91.83 Q 43.11,103.48 38.65,141.38 Q 25.68,134.65 28.87,120.40 Q 43.05,97.51 84.90,90.20 Z"/><path d="M 90.20,84.90 Q 48.99,74.57 26.18,105.16 Q 18.31,92.85 28.20,82.10 Q 51.93,69.37 91.83,83.96 Z"/></g><text x="215" y="133" font-family="Outfit,Segoe UI,Arial,sans-serif" font-size="92" font-weight="700" fill="#ffffff">V</text><text x="279" y="133" font-family="Outfit,Segoe UI,Arial,sans-serif" font-size="86" font-weight="700" fill="#a8c8f8">i</text><text x="306" y="133" font-family="Outfit,Segoe UI,Arial,sans-serif" font-size="92" font-weight="700" fill="#ffffff">F</text><text x="364" y="133" font-family="Outfit,Segoe UI,Arial,sans-serif" font-size="86" font-weight="700" fill="#a8c8f8">o</text><text x="215" y="163" font-family="Outfit,Segoe UI,Arial,sans-serif" font-size="21" font-weight="500" fill="rgba(255,255,255,0.72)" letter-spacing="5.5">VISION FORGE</text></svg>`;
 
 function avH(m,cls='av'){
   if(!m.photo) return `<span>${m.initials}</span>`;
@@ -467,10 +467,7 @@ function ctHTML(cs){
 function renderMember(m){
   document.getElementById('app').innerHTML=`
     <div class="chdr">
-      <div class="corg">
-        <div class="clm">${LM}</div>
-        <div><div class="oname">Vision Forge</div><div class="osub">Official Member Record</div></div>
-      </div>
+      <div class="chdr-logo">${VIFO_LOGO}</div>
       <div class="vbadge ok"><span class="bdot"></span>Verified</div>
     </div>
     <div class="seal">
@@ -533,10 +530,7 @@ function renderMember(m){
 function renderNotFound(id){
   document.getElementById('app').innerHTML=`
     <div class="chdr">
-      <div class="corg">
-        <div class="clm">${LM}</div>
-        <div><div class="oname">Vision Forge</div><div class="osub">Verification System</div></div>
-      </div>
+      <div class="chdr-logo">${VIFO_LOGO}</div>
       <div class="vbadge fail"><span class="bdot"></span>Not Found</div>
     </div>
     <div class="nf">
