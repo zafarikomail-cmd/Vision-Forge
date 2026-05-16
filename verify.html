@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="color-scheme" content="light"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Member Verification — Vision Forge</title>
+  <meta name="description" content="Official Vision Forge member verification portal."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+:root {
+  color-scheme: light;
+  --navy:       #0d1f35;
+  --navy-mid:   #1a3254;
+  --ink:        #1a4b8c;
+  --ink-pale:   #edf3fb;
+  --gold:       #b8922a;
+  --gold-light: #d4ab52;
+  --gold-pale:  #faf5ea;
+  --ivory:      #fdfcf9;
+  --white:      #ffffff;
+  --off-white:  #f8f7f4;
+  --border:     rgba(13,31,53,0.08);
+  --border-mid: rgba(13,31,53,0.14);
+  --text:       #1a2e42;
+  --text-mid:   #4a5e72;
+  --text-light: rgba(26,46,66,0.45);
+  --green:      #16813b;
+  --red:        #c0392b;
+  --radius:     10px;
+  --radius-lg:  18px;
+  --radius-xl:  26px;
+  --ease:       cubic-bezier(0.22,1,0.36,1);
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --body:       'Outfit', system-ui, sans-serif;
+  --script:     'Dancing Script', cursive;
+  --shadow-md:  0 6px 28px rgba(13,31,53,0.10);
+  --shadow-xl:  0 28px 72px rgba(13,31,53,0.17);
+  --nav-h:      72px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{background:var(--ivory);color:var(--text);font-family:var(--body);line-height:1.75;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;}
+
+/* NAV */
+.navbar{position:sticky;top:0;z-index:99;height:var(--nav-h);background:var(--navy);display:flex;align-items:center;padding:0 5%;box-shadow:0 2px 20px rgba(13,31,53,.22);padding-left:max(5%,env(safe-area-inset-left));padding-right:max(5%,env(safe-area-inset-right));}
+.nav-inner{width:100%;max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.nav-logo img{height:44px;width:auto;display:block;flex-shrink:0;}
+.nav-logo:hover img{opacity:.78;}
+.nav-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ntag{font-size:.62rem;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.38);}
+.ndiv{width:1px;height:16px;background:rgba(255,255,255,.14);}
+.nback{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:100px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.65);font-size:.73rem;font-weight:500;transition:all .25s;font-family:var(--body);}
+.nback:hover{background:rgba(255,255,255,.14);color:#fff;}
+.nback svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;}
+
+/* PAGE */
+.page{flex:1;display:flex;flex-direction:column;align-items:center;padding:56px 16px max(80px,calc(80px + env(safe-area-inset-bottom)));position:relative;}
+.page::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:72px 72px;opacity:.35;z-index:0;}
+.page::after{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 30%,transparent 35%,rgba(253,252,249,.92) 100%);z-index:0;}
+
+/* HEADER */
+.ph{position:relative;z-index:1;text-align:center;margin-bottom:44px;opacity:0;animation:fD .6s var(--ease) forwards;}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--ink);margin-bottom:14px;}
+.eyebrow::before,.eyebrow::after{content:'';display:block;width:22px;height:1px;background:var(--gold);}
+.ph h1{font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.08;letter-spacing:-.02em;color:var(--navy);margin-bottom:8px;}
+.ph h1 em{font-style:italic;color:var(--ink);font-weight:300;}
+.ph p{font-size:.88rem;color:var(--text-mid);}
+
+/* CARD */
+.card{width:100%;max-width:580px;position:relative;z-index:1;background:var(--white);border:1px solid var(--border-mid);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-xl);opacity:0;animation:fU .7s .1s var(--ease) forwards;}
+.card.wide{max-width:700px;}
+
+/* CARD HEADER */
+.chdr{background:linear-gradient(135deg,var(--navy) 0%,#1a3254 60%,#162d4f 100%);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;}
+.chdr::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:40px 40px;}
+.chdr::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light),transparent);}
+.corg{display:flex;align-items:center;gap:12px;position:relative;z-index:1;}
+.clm{width:38px;height:38px;border-radius:9px;background:rgba(168,200,248,.12);border:1px solid rgba(168,200,248,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.clm svg{width:18px;height:18px;}
+.oname{font-size:.94rem;font-weight:700;color:#fff;}
+.osub{font-size:.6rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.38);}
+
+/* BADGE */
+.vbadge{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:100px;font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;position:relative;z-index:1;}
+.vbadge.ok{background:rgba(22,129,59,.18);color:#4ade80;border:1px solid rgba(74,222,128,.28);}
+.vbadge.fail{background:rgba(220,38,38,.18);color:#f87171;border:1px solid rgba(248,113,113,.28);}
+.bdot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:blink 2.2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* SEAL STRIP */
+.seal{background:var(--gold-pale);border-bottom:1px solid rgba(184,146,42,.18);padding:9px 28px;display:flex;align-items:center;gap:10px;}
+.stxt{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
+.sln{flex:1;height:1px;background:linear-gradient(90deg,rgba(184,146,42,.3),transparent);}
+
+/* PROFILE */
+.profile{padding:28px 28px 36px;display:flex;gap:28px;align-items:flex-start;border-bottom:1px solid var(--border);}
+.avw{position:relative;flex-shrink:0;}
+.av{width:160px;height:160px;border-radius:var(--radius-lg);border:3px solid var(--gold-light);overflow:hidden;background:var(--ink-pale);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:3rem;font-weight:700;color:var(--ink);flex-shrink:0;box-shadow:0 0 0 5px rgba(184,146,42,0.15),0 8px 32px rgba(13,31,53,0.18);}
+.av img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.rpill{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--navy);color:var(--gold-light);font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 12px;border-radius:100px;white-space:nowrap;border:1px solid rgba(212,171,82,.3);}
+.pmeta{display:flex;flex-direction:column;gap:4px;padding-top:2px;flex:1;min-width:0;}
+.mname{font-family:var(--serif);font-size:clamp(1.4rem,4vw,1.85rem);font-weight:700;color:var(--navy);line-height:1.1;}
+.mtitle{font-size:.67rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin-top:2px;}
+.mdept{font-size:.82rem;color:var(--text-mid);}
+.msig{font-family:var(--script);font-size:1.75rem;color:var(--gold);opacity:.55;line-height:1;margin-top:6px;}
+
+/* DETAIL GRID */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);}
+.dc{padding:16px 28px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+.dc:nth-child(even){border-right:none;}
+.dc:nth-last-child(-n+2){border-bottom:none;}
+.dlbl{font-size:.58rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--text-light);margin-bottom:5px;}
+.dval{font-size:.88rem;font-weight:700;color:var(--navy);}
+.dval.mono{font-family:'Courier New',monospace;font-size:.84rem;color:var(--ink);letter-spacing:.04em;}
+.dval.active{color:var(--green);display:flex;align-items:center;gap:7px;}
+.dval.active::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(22,129,59,.18);}
+.dval.sm{font-size:.78rem;font-weight:600;}
+
+/* INFO STRIPS */
+.istrip{border-bottom:1px solid var(--border);padding:15px 28px;display:flex;align-items:flex-start;gap:14px;}
+.istrip.alt{background:var(--ivory);}
+.iico{width:36px;height:36px;border-radius:9px;background:var(--ink-pale);border:1px solid rgba(26,75,140,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.iico.gold{background:rgba(184,146,42,.08);border-color:rgba(184,146,42,.2);}
+.ilbl{font-size:.58rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-light);margin-bottom:5px;}
+.ival{font-size:.85rem;font-weight:600;color:var(--navy);line-height:1.45;}
+.isub{font-size:.75rem;color:var(--text-mid);margin-top:2px;}
+
+/* CONTACT LINKS */
+.cstrip{border-bottom:1px solid var(--border);padding:15px 28px;display:flex;flex-wrap:wrap;gap:10px;}
+.clink{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:var(--radius);border:1px solid var(--border-mid);background:var(--off-white);font-size:.74rem;font-weight:600;color:var(--navy);transition:all .25s var(--ease);}
+.clink:hover{border-color:rgba(26,75,140,.3);background:var(--ink-pale);color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.clink svg{width:13px;height:13px;flex-shrink:0;}
+
+/* BIO */
+.bio{padding:20px 28px;border-bottom:1px solid var(--border);background:var(--off-white);}
+.blbl{font-size:.58rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;}
+.btxt{font-size:.84rem;line-height:1.85;color:var(--text-mid);}
+
+/* CARD FOOT */
+.cfoot{padding:18px 28px;display:flex;align-items:flex-start;justify-content:space-between;background:var(--ivory);gap:12px;flex-wrap:wrap;}
+.fleft .forg{font-size:.78rem;font-weight:700;color:var(--navy);}
+.fleft .fts{font-size:.65rem;color:var(--text-light);margin-top:2px;}
+.gseal{display:inline-flex;align-items:center;gap:5px;font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:7px;padding:3px 10px;border-radius:100px;border:1px solid rgba(184,146,42,.28);background:rgba(184,146,42,.06);}
+.hblk{text-align:right;}
+.hlbl{font-size:.56rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;}
+.hval{font-family:'Courier New',monospace;font-size:.7rem;color:var(--gold-light);background:var(--navy);padding:3px 10px;border-radius:6px;letter-spacing:.04em;font-weight:600;}
+
+/* NOT FOUND */
+.nf{padding:56px 28px;text-align:center;}
+.nfico{width:72px;height:72px;background:rgba(192,57,43,.07);border:1px solid rgba(192,57,43,.22);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:2rem;}
+.nf h2{font-family:var(--serif);font-size:1.8rem;font-weight:700;color:var(--red);margin-bottom:12px;}
+.nf p{font-size:.87rem;color:var(--text-mid);line-height:1.75;max-width:340px;margin:0 auto 26px;}
+.nfbtn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:var(--radius);background:var(--navy);color:#fff;font-size:.82rem;font-weight:600;font-family:var(--body);transition:all .28s var(--ease);}
+.nfbtn:hover{background:var(--ink);transform:translateY(-2px);}
+
+/* LOADING */
+.loading{padding:70px 28px;text-align:center;}
+.spin{width:34px;height:34px;border:2.5px solid var(--border-mid);border-top-color:var(--ink);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading p{font-size:.84rem;color:var(--text-light);}
+
+/* LIST */
+.lhdr{background:linear-gradient(135deg,var(--navy) 0%,#1a3254 100%);padding:30px 28px 22px;position:relative;overflow:hidden;}
+.lhdr::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:40px 40px;}
+.lhdr::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light),transparent);}
+.lhi{position:relative;z-index:1;}
+.lew{display:inline-flex;align-items:center;gap:8px;font-size:.6rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;}
+.lew::before,.lew::after{content:'';display:block;height:1px;width:18px;background:var(--gold-light);}
+.ltitle{font-family:var(--serif);font-size:1.65rem;font-weight:700;color:#fff;line-height:1.1;margin-bottom:5px;}
+.ltitle em{font-style:italic;color:var(--gold-light);font-weight:300;}
+.lsub{font-size:.76rem;color:rgba(255,255,255,.4);}
+.lcnt{display:flex;align-items:center;gap:8px;padding:10px 14px 4px;font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-light);}
+.lcnt::after{content:'';flex:1;height:1px;background:var(--border);}
+.mlist{display:flex;flex-direction:column;padding:14px;gap:8px;}
+.mrow{display:flex;align-items:center;gap:14px;padding:13px 15px;min-height:64px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--white);cursor:pointer;text-decoration:none;color:inherit;transition:border-color .25s,box-shadow .25s,transform .25s var(--ease);position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.mrow::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--ink),var(--gold));transform:scaleY(0);transform-origin:bottom;transition:transform .35s var(--ease);}
+.mrow:hover{border-color:rgba(26,75,140,.28);box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.mrow:hover::before{transform:scaleY(1);}
+.mav{width:50px;height:50px;border-radius:10px;background:var(--ink-pale);border:1px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);flex-shrink:0;overflow:hidden;}
+.mav img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.minfo{flex:1;min-width:0;}
+.mn{font-size:.9rem;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mi{font-size:.64rem;font-weight:600;color:var(--ink);margin-top:2px;font-family:'Courier New',monospace;}
+.mr{font-size:.72rem;color:var(--text-mid);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.marr{width:30px;height:30px;border-radius:50%;background:var(--off-white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text-light);font-size:.9rem;transition:all .25s;}
+.mrow:hover .marr{background:var(--navy);color:var(--gold-light);border-color:var(--navy);}
+
+/* PAGE FOOT */
+.pfoot{position:relative;z-index:1;margin-top:34px;text-align:center;font-size:.7rem;color:var(--text-light);opacity:0;animation:fU .6s .35s var(--ease) forwards;line-height:1.9;}
+.pfoot a{color:var(--ink);font-weight:600;transition:color .2s;}
+.pfoot a:hover{color:var(--gold);}
+.dot{margin:0 7px;opacity:.35;}
+
+@keyframes fD{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fU{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TABLET / LARGE PHONE ── */
+@media(max-width:640px){
+  :root{--nav-h:60px;}
+  .page{padding:36px 12px 72px;}
+  .ntag,.ndiv{display:none;}
+  .card{border-radius:var(--radius-lg);}
+  .profile{flex-direction:column;gap:0;align-items:center;padding:24px 20px 32px;}
+  .avw{display:flex;flex-direction:column;align-items:center;margin-bottom:18px;}
+  .av{width:140px;height:140px;font-size:2.6rem;}
+  .rpill{bottom:-13px;}
+  .pmeta{padding-top:0;align-items:center;text-align:center;}
+  .mname{font-size:1.6rem;}
+  .mtitle{text-align:center;}
+  .mdept{text-align:center;}
+  .msig{text-align:center;}
+  .dgrid{grid-template-columns:1fr;}
+  .dc{border-right:none!important;border-bottom:1px solid var(--border)!important;}
+  .dc:nth-last-child(-n+2){border-bottom:1px solid var(--border)!important;}
+  .dc:last-child{border-bottom:none!important;}
+  .cfoot{flex-direction:column;gap:10px;}
+  .hblk{text-align:left;}
+  .chdr,.bio,.istrip,.cstrip,.cfoot,.lhdr,.dc,.seal{padding-left:18px;padding-right:18px;}
+  .mlist{padding:10px;}
+  .clink{padding:8px 12px;font-size:.72rem;}
+  .nback{padding:7px 13px;font-size:.7rem;}
+  .lhdr{padding:24px 18px 18px;}
+}
+
+/* ── STANDARD PHONE (≤480px) ── */
+@media(max-width:480px){
+  .page{padding:28px 8px 64px;}
+  .card{border-radius:var(--radius);}
+  .av{width:124px;height:124px;font-size:2.2rem;}
+  .mname{font-size:1.45rem;}
+  .chdr{padding:16px 16px;}
+  .chdr,.bio,.istrip,.cstrip,.cfoot,.lhdr,.dc,.seal{padding-left:14px;padding-right:14px;}
+  .profile{padding:20px 14px 28px;}
+  .cstrip{gap:8px;}
+  .clink{padding:7px 10px;font-size:.7rem;gap:5px;}
+  .iico{width:32px;height:32px;flex-shrink:0;}
+  .mrow{padding:11px 12px;gap:10px;}
+  .mav{width:44px;height:44px;}
+  .marr{width:26px;height:26px;}
+  .ph h1{font-size:1.7rem;}
+  .pfoot{font-size:.65rem;}
+  .oname{font-size:.85rem;}
+  .osub{font-size:.56rem;}
+  .clm{width:32px;height:32px;}
+}
+
+/* ── SMALL PHONE (≤390px) ── */
+@media(max-width:390px){
+  :root{--nav-h:54px;}
+  .page{padding:22px 6px 56px;}
+  .av{width:112px;height:112px;font-size:2rem;}
+  .mname{font-size:1.3rem;}
+  .chdr,.bio,.istrip,.cstrip,.cfoot,.lhdr,.dc,.seal{padding-left:12px;padding-right:12px;}
+  .profile{padding:18px 12px 26px;}
+  .clink{padding:6px 9px;font-size:.67rem;}
+  .ival{font-size:.8rem;}
+  .isub{font-size:.7rem;}
+  .dval{font-size:.82rem;}
+  .dlbl{font-size:.55rem;}
+  .blbl{font-size:.55rem;}
+  .btxt{font-size:.8rem;}
+  .nback span{display:none;}
+  .hval{font-size:.64rem;}
+}
+
+/* ── VERY SMALL PHONE (≤360px) ── */
+@media(max-width:360px){
+  .av{width:100px;height:100px;font-size:1.8rem;}
+  .mname{font-size:1.2rem;}
+  .navbar{padding:0 10px;}
+  .nav-logo img{height:36px;}
+  .ph h1{font-size:1.45rem;}
+  .cstrip{flex-direction:column;}
+  .clink{width:100%;justify-content:center;}
+  .lsub{font-size:.7rem;}
+}
+@media(prefers-color-scheme:dark){:root{color-scheme:light;}html,body{background:#fdfcf9!important;color:#1a2e42!important;}}
+@supports(padding:env(safe-area-inset-top)){
+  .navbar{padding-left:max(5%,env(safe-area-inset-left));padding-right:max(5%,env(safe-area-inset-right));}
+  .page{padding-bottom:max(80px,calc(80px + env(safe-area-inset-bottom)));}
+}
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://zafarikomail-cmd.github.io/Vision-Forge/">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MzAgMjAwIj48ZyBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuOTIpIj48cGF0aCBkPSJNIDk5LjA2LDgyLjAyIFEgNjguNTQsNTIuNDcgMzMuNDksNjcuNTYgUSAzMi44Myw1Mi45NyA0Ni43Nyw0OC42MCBRIDczLjY4LDQ5LjQ0IDEwMC45NCw4Mi4wMiBaIi8+PHBhdGggZD0iTSAxMDguMTcsODMuOTYgUSA5Ni41Miw0My4xMSA1OC42MiwzOC42NSBRIDY1LjM1LDI1LjY4IDc5LjYwLDI4Ljg3IFEgMTAyLjQ5LDQzLjA1IDEwOS44MCw4NC45MCBaIi8+PHBhdGggZD0iTSAxMTUuMTAsOTAuMjAgUSAxMjUuNDMsNDguOTkgOTQuODQsMjYuMTggUSAxMDcuMTUsMTguMzEgMTE3LjkwLDI4LjIwIFEgMTMwLjYzLDUxLjkzIDExNi4wNCw5MS44MyBaIi8+PHBhdGggZD0iTSAxMTcuOTgsOTkuMDYgUSAxNDcuNTMsNjguNTQgMTMyLjQ0LDMzLjQ5IFEgMTQ3LjAzLDMyLjgzIDE1MS40MCw0Ni43NyBRIDE1MC41Niw3My42OCAxMTcuOTgsMTAwLjk0IFoiLz48cGF0aCBkPSJNIDExNi4wNCwxMDguMTcgUSAxNTYuODksOTYuNTIgMTYxLjM1LDU4LjYyIFEgMTc0LjMyLDY1LjM1IDE3MS4xMyw3OS42MCBRIDE1Ni45NSwxMDIuNDkgMTE1LjEwLDEwOS44MCBaIi8+PHBhdGggZD0iTSAxMDkuODAsMTE1LjEwIFEgMTUxLjAxLDEyNS40MyAxNzMuODIsOTQuODQgUSAxODEuNjksMTA3LjE1IDE3MS44MCwxMTcuOTAgUSAxNDguMDcsMTMwLjYzIDEwOC4xNywxMTYuMDQgWiIvPjxwYXRoIGQ9Ik0gMTAwLjk0LDExNy45OCBRIDEzMS40NiwxNDcuNTMgMTY2LjUxLDEzMi40NCBRIDE2Ny4xNywxNDcuMDMgMTUzLjIzLDE1MS40MCBRIDEyNi4zMiwxNTAuNTYgOTkuMDYsMTE3Ljk4IFoiLz48cGF0aCBkPSJNIDkxLjgzLDExNi4wNCBRIDEwMy40OCwxNTYuODkgMTQxLjM4LDE2MS4zNSBRIDEzNC42NSwxNzQuMzIgMTIwLjQwLDE3MS4xMyBRIDk3LjUxLDE1Ni45NSA5MC4yMCwxMTUuMTAgWiIvPjxwYXRoIGQ9Ik0gODQuOTAsMTA5LjgwIFEgNzQuNTcsMTUxLjAxIDEwNS4xNiwxNzMuODIgUSA5Mi44NSwxODEuNjkgODIuMTAsMTcxLjgwIFEgNjkuMzcsMTQ4LjA3IDgzLjk2LDEwOC4xNyBaIi8+PHBhdGggZD0iTSA4Mi4wMiwxMDAuOTQgUSA1Mi40NywxMzEuNDYgNjcuNTYsMTY2LjUxIFEgNTIuOTcsMTY3LjE3IDQ4LjYwLDE1My4yMyBRIDQ5LjQ0LDEyNi4zMiA4Mi4wMiw5OS4wNiBaIi8+PHBhdGggZD0iTSA4My45Niw5MS44MyBRIDQzLjExLDEwMy40OCAzOC42NSwxNDEuMzggUSAyNS42OCwxMzQuNjUgMjguODcsMTIwLjQwIFEgNDMuMDUsOTcuNTEgODQuOTAsOTAuMjAgWiIvPjxwYXRoIGQ9Ik0gOTAuMjAsODQuOTAgUSA0OC45OSw3NC41NyAyNi4xOCwxMDUuMTYgUSAxOC4zMSw5Mi44NSAyOC4yMCw4Mi4xMCBRIDUxLjkzLDY5LjM3IDkxLjgzLDgzLjk2IFoiLz48L2c+PHRleHQgeD0iMjE1IiB5PSIxMzMiIGZvbnQtZmFtaWx5PSJPdXRmaXQsU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI5MiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiI+VjwvdGV4dD48dGV4dCB4PSIyNzkiIHk9IjEzMyIgZm9udC1mYW1pbHk9Ik91dGZpdCxTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9Ijg2IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjYThjOGY4Ij5pPC90ZXh0Pjx0ZXh0IHg9IjMwNiIgeT0iMTMzIiBmb250LWZhbWlseT0iT3V0Zml0LFNlZ29lIFVJLEFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOTIiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiPkY8L3RleHQ+PHRleHQgeD0iMzY0IiB5PSIxMzMiIGZvbnQtZmFtaWx5PSJPdXRmaXQsU2Vnb2UgVUksQXJpYWwsc2Fucy1zZXJpZiIgZm9udC1zaXplPSI4NiIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2E4YzhmOCI+bzwvdGV4dD48dGV4dCB4PSIyMTUiIHk9IjE2MyIgZm9udC1mYW1pbHk9Ik91dGZpdCxTZWdvZSBVSSxBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjIxIiBmb250LXdlaWdodD0iNTAwIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuNzIpIiBsZXR0ZXItc3BhY2luZz0iNS41Ij5WSVNJT04gRk9SR0U8L3RleHQ+PC9zdmc+" alt="Vision Forge" style="height:44px"/>
+    </a>
+    <div class="nav-r">
+      <span class="ntag">Member</span>
+      <div class="ndiv"></div>
+      <span class="ntag">Verification</span>
+      <div class="ndiv"></div>
+      <a class="nback" href="https://zafarikomail-cmd.github.io/Vision-Forge/">
+        <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Site
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="ph">
+    <div class="eyebrow">Vision Forge &nbsp;·&nbsp; Official Portal</div>
+    <h1>Membership <em>Verification</em></h1>
+    <p>Scan a member QR code or select a member to confirm active status</p>
+  </div>
+  <div class="card" id="app">
+    <div class="loading"><div class="spin"></div><p>Checking membership records…</p></div>
+  </div>
+  <p class="pfoot">
+    Official Vision Forge Membership System
+    <span class="dot">·</span>
+    <a href="https://zafarikomail-cmd.github.io/Vision-Forge/">visionforge.pk</a>
+    <span class="dot">·</span>
+    Est. NUTECH, Islamabad 2024
+  </p>
+</div>
+
+<script>
+/* ════ FULL MEMBER REGISTRY ════ */
+const members = [
+  {
+    id:"VF-9X4KM", name:"Suhail Sarwar", title:"Founder & President", role:"FOUNDER",
+    dept:"Executive Leadership", joined:"2024-01-01", initials:"SS",
+    photo:"Images/Suhail.jpeg", sig:"Suhail",
+    location:"NUTECH, Islamabad, Pakistan",
+    education:"Executive Leadership · Vision Forge", eduSub:"Founder & Chief Executive",
+    bio:"Visionary founder of Vision Forge, dedicated to building Pakistan's next generation of disciplined, purpose-driven leaders. Suhail leads the organisation's strategic direction, programs, and overall mission with a deep commitment to youth development and national service.",
+    contacts:[
+      {label:"Email",    href:"mailto:msuhailserwer@gmail.com", icon:"email"},
+      {label:"WhatsApp", href:"https://wa.me/923105826985",     icon:"whatsapp"},
+      {label:"LinkedIn", href:"#",                              icon:"linkedin"},
+      {label:"Twitter",  href:"#",                              icon:"twitter"}
+    ]
+  },
+  {
+    id:"VF-3T7PQ", name:"Ahmad Komail Zafari", title:"Lead Web Developer", role:"DEVELOPER",
+    dept:"Technology & Digital", joined:"2024-02-15", initials:"AK",
+    photo:"Images/Komail.jpg", sig:"Ahmad",
+    location:"Islamabad, Pakistan",
+    education:"Computer Science · Software Engineering", eduSub:"Frontend & Full-Stack Development",
+    bio:"Architects and develops Vision Forge's entire digital ecosystem — building polished, high-performance interfaces that bring the movement's mission to life. Ahmad is responsible for the website, member portal, verification system, and all digital tools that power Vision Forge.",
+    contacts:[
+      {label:"GitHub",   href:"#", icon:"github"},
+      {label:"LinkedIn", href:"#", icon:"linkedin"}
+    ]
+  },
+  {
+    id:"VF-6R2NJ", name:"Mujtaba Shaistah", title:"Media & Journalism Lead", role:"MEDIA",
+    dept:"Communications & Media", joined:"2024-03-10", initials:"MS",
+    photo:"Images/Mujtaba .jpeg", sig:"Mujtaba",
+    location:"Islamabad, Pakistan · Originally from Samangan, Afghanistan",
+    education:"B.A. Journalism · Moscow State University", eduSub:"International Media & Cross-Cultural Communication",
+    bio:"Brings an international media perspective and deep cross-cultural expertise to Vision Forge's outreach and publications. Originally from Samangan, Afghanistan, Mujtaba's journalism background from Moscow State University gives the organisation a uniquely global editorial voice.",
+    contacts:[]
+  },
+  {
+    id:"VF-8W5LC", name:"Maryam Qadis", title:"Legal Advisor", role:"LEGAL",
+    dept:"Legal Affairs", joined:"2024-04-05", initials:"MQ",
+    photo:"Images/Maryam .jpeg", sig:"Maryam",
+    location:"Tehran, Iran · Originally from Faryab, Afghanistan",
+    education:"LL.B. Law · Faryab, Afghanistan", eduSub:"Cross-Cultural Legal Studies & Human Rights",
+    bio:"An LL.B. graduate originally from Faryab, Afghanistan, currently based in Tehran. Maryam brings cross-cultural legal insight and a deep commitment to justice and governance. She advises Vision Forge on legal matters, compliance, and member rights.",
+    contacts:[
+      {label:"Email", href:"mailto:qadismaryam@gmail.com", icon:"email"}
+    ]
+  },
+  {
+    id:"VF-1Y9BZ", name:"Obeidrahman Karimi", title:"History & Cultural Affairs", role:"ADVISOR",
+    dept:"Cultural & Historical Research", joined:"2024-04-20", initials:"OK",
+    photo:"Images/karimi.jpeg", sig:"Obeid",
+    location:"Islamabad, Pakistan · Originally from Sarpul, Afghanistan",
+    education:"B.A. History · Kabul University", eduSub:"Historical Analysis & Cultural Studies",
+    bio:"Holds a B.A. in History from Kabul University, originally from Sarpul, Afghanistan. Obeid brings deep historical perspective and rich cultural insight to Vision Forge's programs, leading the organisation's historical analysis curriculum.",
+    contacts:[
+      {label:"Email", href:"mailto:Obeidrahmankarimi415@gmail.com", icon:"email"}
+    ]
+  },
+  {
+    id:"VF-4D6FH", name:"Habib Rahman Rahimi", title:"Economics & Research Lead", role:"RESEARCHER",
+    dept:"Economics & Strategy", joined:"2024-05-01", initials:"HR",
+    photo:"Images/Rahimi.jpg", sig:"Habib",
+    location:"Islamabad, Pakistan · Originally from Mazar-e-Sharif, Afghanistan",
+    education:"B.A. Economics · University of Mazar-e-Sharif", eduSub:"Economic Research & Strategic Analysis",
+    bio:"Holds a B.A. in Economics, originally from Mazar-e-Sharif, Afghanistan. Habib brings analytical thinking and strong economic insight to Vision Forge's research agenda and strategic planning, leading data-driven program assessments.",
+    contacts:[]
+  },
+  {
+    id:"VF-7K3QX", name:"Hamza Qureshi", title:"Events & Operations Lead", role:"OPERATIONS",
+    dept:"Events & Operations", joined:"2024-05-15", initials:"HQ",
+    photo:"https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80",
+    sig:"Hamza",
+    location:"Islamabad, Pakistan",
+    education:"Management & Organisational Leadership", eduSub:"Event Planning · Community Engagement",
+    bio:"Orchestrates impactful events, workshops, and community gatherings that bring the Vision Forge community together. Hamza manages end-to-end event logistics, partnerships, and operations — ensuring every program is executed to the highest standard.",
+    contacts:[
+      {label:"LinkedIn", href:"#", icon:"linkedin"},
+      {label:"Twitter",  href:"#", icon:"twitter"}
+    ]
+  },
+  {
+    id:"VF-5P8RN", name:"Zainab Noor", title:"Scholarship Guidance Lead", role:"ADVISOR",
+    dept:"Scholarship & Academic Support", joined:"2024-06-01", initials:"ZN",
+    photo:"https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80",
+    sig:"Zainab",
+    location:"Islamabad, Pakistan",
+    education:"Academic Research & Education Counselling", eduSub:"Scholarship Navigation · Application Strategy",
+    bio:"Navigates the scholarship landscape for Vision Forge members — from identifying the right opportunity to preparing a competitive application. Zainab provides personalised guidance on HEC, PEEF, Fulbright, Chevening, DAAD, and international scholarships at no cost to members.",
+    contacts:[
+      {label:"LinkedIn", href:"#", icon:"linkedin"},
+      {label:"Email",    href:"#", icon:"email"}
+    ]
+  },
+  {
+    id:"VF-2C6TW", name:"Ahmed Raza", title:"Head of Digital & Creative", role:"CREATIVE",
+    dept:"Digital & Creative", joined:"2024-06-10", initials:"AR",
+    photo:"https://images.unsplash.com/photo-1552058544-f2b08422138a?w=400&q=80",
+    sig:"Ahmed",
+    location:"Islamabad, Pakistan",
+    education:"Digital Media & Creative Communication", eduSub:"Content Strategy · Brand Identity",
+    bio:"Shapes Vision Forge's digital presence, content strategy, and brand identity — ensuring the movement's message reaches and resonates with a growing nationwide audience. Ahmed leads all creative output, social media, visual design, and digital campaigns.",
+    contacts:[
+      {label:"LinkedIn",  href:"#", icon:"linkedin"},
+      {label:"Instagram", href:"#", icon:"instagram"}
+    ]
+  }
+];
+
+/* ── HELPERS ── */
+const getP  = k => new URLSearchParams(location.search).get(k);
+const fmtD  = s => new Date(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+const nowS  = ()=> new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+function hash(s){let h=5381;for(let c of s)h=((h<<5)+h)^c.charCodeAt(0);return(Math.abs(h)>>>0).toString(16).toUpperCase().padStart(8,'0');}
+
+/* ── ICONS ── */
+const IC = {
+  email:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" width="13" height="13"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5"/></svg>`,
+  whatsapp:`<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 2C6.477 2 2 6.477 2 12c0 1.89.524 3.655 1.435 5.163L2 22l4.956-1.41A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>`,
+  linkedin:`<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>`,
+  twitter:`<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>`,
+  github:`<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>`,
+  instagram:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="13" height="13"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
+  edu:`<svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>`,
+  pin:`<svg viewBox="0 0 24 24" fill="var(--gold)" width="14" height="14"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`
+};
+
+const LM = `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><g fill="rgba(168,200,248,0.85)"><path d="M99,82 Q68,52 33,67 Q32,52 46,48 Q73,49 100,82Z"/><path d="M108,83 Q96,43 58,38 Q65,25 79,28 Q102,43 109,84Z"/><path d="M115,90 Q125,49 94,26 Q107,18 117,28 Q130,51 116,91Z"/><path d="M117,99 Q147,68 132,33 Q147,32 151,46 Q150,73 117,100Z"/><path d="M116,108 Q156,96 161,58 Q174,65 171,79 Q156,102 115,109Z"/><path d="M109,115 Q151,125 173,94 Q181,107 171,117 Q148,130 108,116Z"/><path d="M100,117 Q131,147 166,132 Q167,147 153,151 Q126,150 99,117Z"/><path d="M91,116 Q103,156 141,161 Q134,174 120,171 Q97,156 90,115Z"/><path d="M84,109 Q74,151 105,173 Q92,181 82,171 Q69,148 83,108Z"/><path d="M82,100 Q52,131 67,166 Q52,167 48,153 Q49,126 82,99Z"/><path d="M83,91 Q43,103 38,141 Q25,134 28,120 Q43,97 84,90Z"/><path d="M90,84 Q48,74 26,105 Q18,92 28,82 Q51,69 91,83Z"/></g></svg>`;
+
+function avH(m,cls='av'){
+  if(!m.photo) return `<span>${m.initials}</span>`;
+  return `<img src="${m.photo}" alt="${m.name}" loading="eager" decoding="async" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span style=\\'display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-family:var(--serif);font-size:2.8rem;font-weight:700;color:var(--ink)\\'>${m.initials}</span>')"/>`;
+}
+
+function ctHTML(cs){
+  if(!cs||!cs.length) return '';
+  return `<div class="cstrip">${cs.map(c=>`<a class="clink" href="${c.href}" target="${c.href.startsWith('mailto')||c.href==='#'?'_self':'_blank'}" rel="noopener">${IC[c.icon]||''}${c.label}</a>`).join('')}</div>`;
+}
+
+/* ── RENDER MEMBER ── */
+function renderMember(m){
+  document.getElementById('app').innerHTML=`
+    <div class="chdr">
+      <div class="corg">
+        <div class="clm">${LM}</div>
+        <div><div class="oname">Vision Forge</div><div class="osub">Official Member Record</div></div>
+      </div>
+      <div class="vbadge ok"><span class="bdot"></span>Verified</div>
+    </div>
+    <div class="seal">
+      <span style="color:var(--gold);font-size:.8rem">★</span>
+      <span class="stxt">Authenticated Active Member · NUTECH, Islamabad</span>
+      <div class="sln"></div>
+    </div>
+    <div class="profile">
+      <div class="avw">
+        <div class="av">${avH(m)}</div>
+        <div class="rpill">${m.role}</div>
+      </div>
+      <div class="pmeta">
+        <div class="mname">${m.name}</div>
+        <div class="mtitle">${m.title}</div>
+        <div class="mdept">${m.dept}</div>
+        <div class="msig">${m.sig}</div>
+      </div>
+    </div>
+    <div class="dgrid">
+      <div class="dc"><div class="dlbl">Member ID</div><div class="dval mono">${m.id}</div></div>
+      <div class="dc"><div class="dlbl">Status</div><div class="dval active">Active Member</div></div>
+      <div class="dc"><div class="dlbl">Member Since</div><div class="dval">${fmtD(m.joined)}</div></div>
+      <div class="dc"><div class="dlbl">Department</div><div class="dval sm">${m.dept}</div></div>
+    </div>
+    <div class="istrip alt">
+      <div class="iico">${IC.edu}</div>
+      <div>
+        <div class="ilbl">Education & Background</div>
+        <div class="ival">${m.education}</div>
+        <div class="isub">${m.eduSub}</div>
+      </div>
+    </div>
+    <div class="istrip">
+      <div class="iico gold">${IC.pin}</div>
+      <div>
+        <div class="ilbl">Location</div>
+        <div class="ival" style="font-size:.83rem">${m.location}</div>
+      </div>
+    </div>
+    ${ctHTML(m.contacts)}
+    <div class="bio">
+      <div class="blbl">About This Member</div>
+      <div class="btxt">${m.bio}</div>
+    </div>
+    <div class="cfoot">
+      <div class="fleft">
+        <div class="forg">Vision Forge · NUTECH, Islamabad</div>
+        <div class="fts">Verified: ${nowS()}</div>
+        <div class="gseal">★ &nbsp;Officially Certified Member</div>
+      </div>
+      <div class="hblk">
+        <div class="hlbl">Record Hash</div>
+        <div class="hval">#${hash(m.id)}</div>
+      </div>
+    </div>`;
+}
+
+/* ── RENDER NOT FOUND ── */
+function renderNotFound(id){
+  document.getElementById('app').innerHTML=`
+    <div class="chdr">
+      <div class="corg">
+        <div class="clm">${LM}</div>
+        <div><div class="oname">Vision Forge</div><div class="osub">Verification System</div></div>
+      </div>
+      <div class="vbadge fail"><span class="bdot"></span>Not Found</div>
+    </div>
+    <div class="nf">
+      <div class="nfico">⚠️</div>
+      <h2>Verification Failed</h2>
+      <p>No active member found with ID <strong style="color:var(--navy)">${id||'unknown'}</strong>.<br/><br/>
+      This QR code may be invalid, expired, or tampered with. Please contact Vision Forge administration.</p>
+      <a href="verify.html" class="nfbtn">← View All Members</a>
+    </div>`;
+}
+
+/* ── RENDER LIST ── */
+function renderList(){
+  document.querySelector('.card').classList.add('wide');
+  document.getElementById('app').innerHTML=`
+    <div class="lhdr">
+      <div class="lhi">
+        <div class="lew"><span></span>Active Roster<span></span></div>
+        <h2 class="ltitle">All <em>Members</em></h2>
+        <p class="lsub">Select a member to view their official verification card</p>
+      </div>
+    </div>
+    <div class="lcnt">${members.length} Active Members</div>
+    <div class="mlist">
+      ${members.map(m=>`
+        <a class="mrow" href="?id=${m.id}">
+          <div class="mav">${avH(m,'mav')}</div>
+          <div class="minfo">
+            <div class="mn">${m.name}</div>
+            <div class="mi">${m.id}</div>
+            <div class="mr">${m.title} &nbsp;·&nbsp; ${m.dept}</div>
+          </div>
+          <div class="marr">›</div>
+        </a>`).join('')}
+    </div>`;
+}
+
+/* ── INIT ── */
+const id=getP('id');
+if(!id) renderList();
+else{ const m=members.find(x=>x.id===id); m?renderMember(m):renderNotFound(id); }
+</script>
+</body>
+</html>
